@@ -1,0 +1,6 @@
+include 'a.trainee'
+include 'b.junior'
+include 'c.middle'
+include 'd.fullstack'
+include 'e.addition'
+
