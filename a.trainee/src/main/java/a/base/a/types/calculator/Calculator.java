@@ -1,4 +1,4 @@
-package a.base.a.types;
+package a.base.a.types.calculator;
 /**
  * Class Calculator.
  * Contains the methods of the elementary calculator

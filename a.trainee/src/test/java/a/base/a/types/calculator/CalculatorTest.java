@@ -1,5 +1,6 @@
-package a.base.a.types;
+package a.base.a.types.calculator;
 
+import a.base.a.types.calculator.Calculator;
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;

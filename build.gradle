@@ -20,7 +20,7 @@ subprojects {
 
     checkstyle {
         toolVersion '8.12'
-        configFile file("$rootDir/config/checkstyle/checkstyle.xml")
+        configFile file("$rootDir/checkstyle.xml")
     }
 
     checkstyleMain {
