@@ -35,8 +35,8 @@ public class StartUI {
         menu.fillAction();
         do {
             menu.show();
-            menu.select(input.ask("Пункт меню:", ranges));
-        } while (!"да".equals(this.input.ask("Закончить работу с редактором? да/нет")));
+            menu.select(input.ask("Menu item:", ranges));
+        } while (!"y".equals(this.input.ask("Finish work with the editor? y/n")));
     }
     /**
      * Method launches the application.

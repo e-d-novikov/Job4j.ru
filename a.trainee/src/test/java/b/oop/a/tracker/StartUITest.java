@@ -38,7 +38,7 @@ public class StartUITest {
 
     @Test
     public void whenAddItem() {
-        Input input = new StubInput(new String[]{"1", "testname", "desc", "да"});
+        Input input = new StubInput(new String[]{"1", "testname", "desc", "y"});
         new StartUI(input, tracker).init();
         assertThat(new String(this.out.toByteArray()), is("Application Editor"
                 + l + "Please select action:"
@@ -55,7 +55,7 @@ public class StartUITest {
 
     @Test
     public void whenUpdateItem() {
-        Input input = new StubInput(new String[]{"2", one.getId(), "replace", "replace", "нет", "4", "да"});
+        Input input = new StubInput(new String[]{"2", one.getId(), "replace", "replace", "n", "4", "y"});
         new StartUI(input, tracker).init();
         assertThat(new String(this.out.toByteArray()), is("Application Editor"
                 + l + "Please select action:"
@@ -85,7 +85,7 @@ public class StartUITest {
 
     @Test
     public void whenDeleteItem() {
-        Input input = new StubInput(new String[]{"3", one.getId(), "нет", "4", "да"});
+        Input input = new StubInput(new String[]{"3", one.getId(), "n", "4", "y"});
         new StartUI(input, tracker).init();
         assertThat(new String(this.out.toByteArray()), is("Application Editor"
                 + l + "Please select action:"
@@ -114,7 +114,7 @@ public class StartUITest {
 
     @Test
     public void whenGetAllItems() {
-        Input input = new StubInput(new String[]{"4", "да"});
+        Input input = new StubInput(new String[]{"4", "y"});
         new StartUI(input, tracker).init();
         Item[] test = new Item[]{one, two};
         assertThat(new String(this.out.toByteArray()), is("Application Editor"
@@ -134,7 +134,7 @@ public class StartUITest {
 
     @Test
     public void whenFindId() {
-        Input input = new StubInput(new String[]{"5", one.getId(), "да"});
+        Input input = new StubInput(new String[]{"5", one.getId(), "y"});
         new StartUI(input, tracker).init();
         assertThat(new String(this.out.toByteArray()), is("Application Editor"
                 + l + "Please select action:"
@@ -152,7 +152,7 @@ public class StartUITest {
 
     @Test
     public void whenFindByName() {
-        Input input = new StubInput(new String[]{"6", two.getName(), "да"});
+        Input input = new StubInput(new String[]{"6", two.getName(), "y"});
         new StartUI(input, tracker).init();
         Item[] test = new Item[]{two};
         assertThat(new String(this.out.toByteArray()), is("Application Editor"

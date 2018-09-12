@@ -1,6 +1,7 @@
 package b.oop.a.tracker;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 /**
  * Class MenuTracker the class describes menu items.
  *
@@ -21,6 +22,7 @@ public class MenuTracker {
      * User actions.
      */
     private ArrayList<UserAction> actions = new ArrayList<>();
+    private Consumer<String> printItem = x -> System.out.println(x);
     /**
      * Constructor.
      * @param input - input;
@@ -53,11 +55,14 @@ public class MenuTracker {
      * Menu heading.
      */
     public void show() {
-        System.out.println("Application Editor");
-        System.out.println("Please select action:");
+        printItem.accept("Application Editor");
+        printItem.accept("Please select action:");
+        //System.out.println("Application Editor");
+        //System.out.println("Please select action:");
         for (UserAction action : this.actions) {
             if (action != null) {
-                System.out.println(action.info());
+                printItem.accept(action.info());
+                //System.out.println(action.info());
             }
         }
     }
