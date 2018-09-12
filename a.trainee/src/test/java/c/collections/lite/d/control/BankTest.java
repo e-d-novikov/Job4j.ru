@@ -1,10 +1,6 @@
 package c.collections.lite.d.control;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 /**
@@ -15,26 +11,13 @@ import static org.hamcrest.core.Is.is;
  */
 public class BankTest {
 
-    private final PrintStream stdout = System.out;
-    private final ByteArrayOutputStream out = new ByteArrayOutputStream();
     public String l = System.lineSeparator();
-
-    @Before
-    public void inputdata() {
-        System.setOut(new PrintStream(this.out));
-    }
-
-    @After
-    public void backOutput() {
-        System.setOut(this.stdout);
-    }
 
     @Test
     public void whenAddUser() {
         Bank test = new Bank();
         test.addUser("TestUser", 7525);
-        test.listUsers();
-        assertThat(new String(this.out.toByteArray()), is("TestUser 7525" + l + "№ 0 - 0,00 руб." + l));
+        assertThat(test.getUser(7525).toString(), is("User name TestUser Passport 7525"));
     }
 
     @Test
@@ -42,8 +25,7 @@ public class BankTest {
         Bank test = new Bank();
         test.addUser("TestUser", 7525);
         test.addMoneyToAccountUser(7525, 0, 500);
-        test.listUsers();
-        assertThat(new String(this.out.toByteArray()), is("TestUser 7525" + l + "№ 0 - 500,00 руб." + l));
+        assertThat(test.getAccount(7525, 0).toString(), is("Account 0 Amount 500.0"));
     }
 
     @Test
@@ -51,8 +33,8 @@ public class BankTest {
         Bank test = new Bank();
         test.addUser("TestUser", 7525);
         test.deleteUser(7525);
-        test.listUsers();
-        assertThat(new String(this.out.toByteArray()), is(""));
+        User result = null;
+        assertThat(test.getUser(7525), is(result));
     }
 
     @Test
@@ -60,8 +42,7 @@ public class BankTest {
         Bank test = new Bank();
         test.addUser("TestUser", 7525);
         test.addAccountToUser(7525);
-        test.listUsers();
-        assertThat(new String(this.out.toByteArray()), is("TestUser 7525" + l + "№ 0 - 0,00 руб." + l + "№ 1 - 0,00 руб." + l));
+        assertThat(test.getAccount(7525, 0).toString(), is("Account 0 Amount 0.0"));
     }
 
     @Test
@@ -70,8 +51,8 @@ public class BankTest {
         test.addUser("TestUser", 7525);
         test.addAccountToUser(7525);
         test.deleteAccountFromUser(7525, 0);
-        test.listUsers();
-        assertThat(new String(this.out.toByteArray()), is("TestUser 7525" + l + "№ 1 - 0,00 руб." + l));
+        Account result = null;
+        assertThat(test.getAccount(7525, 0), is(result));
     }
 
     @Test
@@ -81,8 +62,8 @@ public class BankTest {
         test.addMoneyToAccountUser(7525, 0, 1000);
         test.addUser("TestUserTwo", 7545);
         test.transferMoney(7525, 0, 7545, 1, 500);
-        test.listUsers();
-        assertThat(new String(this.out.toByteArray()), is("TestUserTwo 7545" + l + "№ 1 - 500,00 руб." + l + "TestUserOne 7525" + l + "№ 0 - 500,00 руб." + l));
+        assertThat(test.getAccount(7525, 0).toString(), is("Account 0 Amount 500.0"));
+        assertThat(test.getAccount(7545, 1).toString(), is("Account 1 Amount 500.0"));
     }
 
     @Test
@@ -92,8 +73,8 @@ public class BankTest {
         test.addMoneyToAccountUser(7525, 0, 1000);
         test.addAccountToUser(7525);
         test.transferMoney(7525, 0, 7525, 1, 500);
-        test.listUsers();
-        assertThat(new String(this.out.toByteArray()), is("TestUser 7525" + l + "№ 0 - 500,00 руб." + l +  "№ 1 - 500,00 руб." + l));
+        assertThat(test.getAccount(7525, 0).toString(), is("Account 0 Amount 500.0"));
+        assertThat(test.getAccount(7525, 1).toString(), is("Account 1 Amount 500.0"));
     }
 }
 

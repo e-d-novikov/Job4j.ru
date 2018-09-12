@@ -94,8 +94,8 @@ public class Bank {
      * @param passport - user's passport data.
      * @return - receives user data.
      */
-    private User getUser(int passport) {
-        User result = new User("", passport);
+    public User getUser(int passport) {
+        User result = null;
         for (User user : bank.keySet()) {
             if (user.getPassport() == passport) {
                 result = user;
@@ -109,8 +109,8 @@ public class Bank {
      * @param requisites - account details.
      * @return - user account.
      */
-    private Account getAccount(int passport, int requisites) {
-        Account result = new Account(0, 0);
+    public Account getAccount(int passport, int requisites) {
+        Account result = null;
         for (Account account : getUserAccounts(passport)) {
             if (account.getRequisites() == requisites) {
                 result = account;

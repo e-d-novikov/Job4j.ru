@@ -35,4 +35,9 @@ public class User {
     public void setPassport(int passport) {
         this.passport = passport;
     }
+
+    @Override
+    public String toString() {
+        return "User name " + name + " Passport " + passport;
+    }
 }

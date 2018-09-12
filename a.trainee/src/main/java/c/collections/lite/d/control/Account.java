@@ -31,4 +31,9 @@ public class Account {
     public int getRequisites() {
         return this.requisites;
     }
+
+    @Override
+    public String toString() {
+        return "Account " + requisites + " Amount " + value;
+    }
 }
