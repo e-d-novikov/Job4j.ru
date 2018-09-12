@@ -2,6 +2,8 @@ package b.oop.a.tracker;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.function.Predicate;
+
 /**
  * Class Tracker keeps applications, and has methods for editing.
  * @author Egor Novikov (e.novikov@yahoo.com)
@@ -25,6 +27,8 @@ public class Tracker {
      * The method realizing the addition of an application to the repository.
      * @param item - new application.
      */
+    private Predicate<Item> predicate = x -> x != null;
+
     public Item add(Item item) {
         item.setId(this.generateId());
         items.add(item);
@@ -72,10 +76,9 @@ public class Tracker {
      * @return - new unique key.
      */
     public Item findById(String id) {
-        //поиск по id
         Item result = null;
         for (Item item : items) {
-            if (item != null && item.getId().equals(id)) {
+            if (predicate.test(item) && item.getId().equals(id)) {
                 result = item;
                 break;
             }
