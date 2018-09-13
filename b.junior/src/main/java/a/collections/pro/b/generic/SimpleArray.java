@@ -67,6 +67,10 @@ public class SimpleArray<T> implements Iterable<T> {
     public T get(int index) {
         return array[index];
     }
+
+    public int getSize() {
+        return this.size - 1;
+    }
     /**
      * Iterator.
      * @return - iterator.
