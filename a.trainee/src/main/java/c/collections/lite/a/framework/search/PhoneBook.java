@@ -2,6 +2,8 @@ package c.collections.lite.a.framework.search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Phone book.
  * @author Egor Novikov (e.novikov@yahoo.com)
@@ -26,15 +28,11 @@ public class PhoneBook {
      * @return - person.
      */
     public List<Person> find(String key) {
-        List<Person> result = new ArrayList<>();
-        for (Person person : book) {
-            if (person.getName().contains(key)
-                    || person.getSurname().contains(key)
-                    || person.getPhone().contains(key)
-                    || person.getAddress().contains(key)) {
-                result.add(person);
-            }
-        }
+        List<Person> result = book.stream().filter(person -> person.getName().contains(key)
+                || person.getSurname().contains(key)
+                || person.getPhone().contains(key)
+                || person.getAddress().contains(key)
+        ).collect(Collectors.toList());
         return result;
     }
 }

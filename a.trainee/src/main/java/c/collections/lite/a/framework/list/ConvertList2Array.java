@@ -1,7 +1,10 @@
 package c.collections.lite.a.framework.list;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Convert list to array.
  * @author Egor Novikov (e.novikov@yahoo.com)

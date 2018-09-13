@@ -2,6 +2,11 @@ package c.collections.lite.b.generalizations;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * Class UserConvert.
  * @author Egor Novikov (e.novikov@yahoo.com)
@@ -14,11 +19,7 @@ public class UserConvert {
      * @param list - list;
      * @return - map.
      */
-    public HashMap<Integer, User> convert(List<User> list) {
-        HashMap<Integer, User> result = new HashMap<Integer, User>();
-        for (User user : list) {
-            result.put(user.getId(), user);
-        }
-        return result;
+    public Map<Integer, User> convert(List<User> list) {
+        return list.stream().collect(Collectors.toMap(User :: getId, Function.identity()));
     }
 }
