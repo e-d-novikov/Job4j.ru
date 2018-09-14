@@ -14,21 +14,21 @@ import static org.hamcrest.core.Is.is;
  */
 public class SimplyConnectedListTest {
 
-    private SimplyConnectedList<Integer> list;
+    private SimplyConnectedList<Integer, Integer> list;
 
     @Before
     public void beforeTest() {
         list = new SimplyConnectedList<>();
-        list.add(1);
-        list.add(2);
-        list.add(3);
+        list.add(1, 1);
+        list.add(2, 2);
+        list.add(3, 3);
     }
 
     @Test
     public void whenAddThreeElementsThenUseGetOneResultTwo() {
-        assertThat(list.get(0), is(3));
-        assertThat(list.get(1), is(2));
-        assertThat(list.get(2), is(1));
+        assertThat(list.get(1), is(1));
+        assertThat(list.get(2), is(2));
+        assertThat(list.get(3), is(3));
     }
 
     @Test
@@ -38,8 +38,11 @@ public class SimplyConnectedListTest {
 
     @Test
     public void whenAddThreeElementsAndDeleteOne() {
-        list.delete();
-        assertThat(list.get(0), is(2));
+        list.delete(2);
+        Object check = null;
+        assertThat(list.getSize(), is(2));
         assertThat(list.get(1), is(1));
+        assertThat(list.get(2), is(check));
+        assertThat(list.get(3), is(3));
     }
 }

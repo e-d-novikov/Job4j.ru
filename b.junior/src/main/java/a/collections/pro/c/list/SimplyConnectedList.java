@@ -7,7 +7,7 @@ package a.collections.pro.c.list;
  * @version 1
  * @since 0.1
  */
-public class SimplyConnectedList<E> {
+public class SimplyConnectedList<K, V> {
     /**
      * Size.
      */
@@ -15,12 +15,12 @@ public class SimplyConnectedList<E> {
     /**
      * Top of list.
      */
-    private Node<E> first;
+    private Node<K, V> first;
     /**
      * The method inserts data into the top of the list.
      */
-    public void add(E date) {
-        Node<E> newLink = new Node<>(date);
+    public void add(K key, V data) {
+        Node<K, V> newLink = new Node<>(key, data);
         newLink.next = this.first;
         this.first = newLink;
         this.size++;
@@ -28,19 +28,48 @@ public class SimplyConnectedList<E> {
     /**
      * Method for removing the first item in the list.
      */
-    public void delete() {
-        this.first = this.first.next;
-        size--;
+    public void delete(K key) {
+        if (first.key == key) {
+            first = first.next;
+        } else {
+            Node<K, V> current = first;
+            Node<K, V> previous;
+            for (int i = 0; i < size; i++) {
+                previous = current;
+                current = current.next;
+                if (current.key == key) {
+                    previous.next = current.next;
+                    //first = current;
+                    size--;
+                    break;
+                }
+                if (current.next == null) {
+                    break;
+                }
+            }
+        }
     }
     /**
      * Method of obtaining an element by index.
      */
-    public E get(int index) {
-        Node<E> result = this.first;
-        for (int i = 0; i < index; i++) {
-            result = result.next;
+    public V get(K key) {
+        V result = null;
+        if (first.key.equals(key)) {
+            result = first.data;
+        } else {
+            Node<K, V> current = first;
+            for (int i = 0; i < size; i++) {
+                current = current.next;
+                if (current.key.equals(key)) {
+                    result = current.data;
+                    break;
+                }
+                if (current.next == null) {
+                    break;
+                }
+            }
         }
-        return result.date;
+        return result;
     }
     /**
      * Method of obtaining the size of the collection.
@@ -51,12 +80,15 @@ public class SimplyConnectedList<E> {
     /**
      * The class is intended for data storage.
      */
-    private static class Node<E> {
-        E date;
-        Node<E> next;
+    private static class Node<K, V> {
 
-        Node(E date) {
-            this.date = date;
+        K key;
+        V data;
+        Node<K, V> next;
+
+        Node(K key, V data) {
+            this.key = key;
+            this.data = data;
         }
     }
 }
