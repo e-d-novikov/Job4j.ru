@@ -1,6 +1,4 @@
 package a.collections.pro.e.map;
-
-import a.collections.pro.c.list.SimplyConnectedList;
 /**
  * Класс HashMapClass.
  * Описывает структуру HashMap.
@@ -31,8 +29,8 @@ public class HashMapClass<K, V> {
      * Конструктор.
      */
     HashMapClass() {
-        capacity = 100;
-        amountNumbers = 2;
+        capacity = 10;
+        amountNumbers = 1;
         this.array = new SimplyConnectedList[capacity];
         position = 0;
     }
@@ -40,12 +38,20 @@ public class HashMapClass<K, V> {
      * Метод увеличивает вместимость в 10 раз.
      */
     private void reSize() {
-        if (position == array.length) {
+        if (position == capacity) {
             capacity = capacity * 10;
             amountNumbers++;
-            SimplyConnectedList[] newArray =  new SimplyConnectedList[capacity];
-            System.arraycopy(array, 0, newArray, 0, array.length);
-            this.array = newArray;
+            position = 0;
+            SimplyConnectedList[] newArray = array;
+            this.array = new SimplyConnectedList[capacity];
+            for (int i = 0; i < newArray.length; i++) {
+                if (newArray[i].getSize() != 0) {
+                    int index = newArray[i].getSize();
+                    for (int j = 0; j < index; j++) {
+                        insert((K) newArray[i].getKey(j), (V) newArray[i].getData(j));
+                    }
+                }
+            }
         }
     }
     /**
@@ -79,7 +85,7 @@ public class HashMapClass<K, V> {
      */
     public void insert(K key, V data) {
         reSize();
-        int hash = key.hashCode();
+        int hash = Math.abs(key.hashCode());
         int pos = position(hash);
         if (array[pos] != null) {
             array[pos].add(key, data);
@@ -97,7 +103,7 @@ public class HashMapClass<K, V> {
      */
     public V get(K key) {
         V result = null;
-        int pos = position(key.hashCode());
+        int pos = position(Math.abs(key.hashCode()));
         if (array[pos] != null) {
             result = (V) array[pos].get(key);
         }
@@ -108,11 +114,157 @@ public class HashMapClass<K, V> {
      * @param key - ключ.
      */
     public void delete(K key) {
-        int pos = position(key.hashCode());
+        int pos = position(Math.abs(key.hashCode()));
         if (array[pos].getSize() > 1) {
             array[pos].delete(key);
+            position--;
         } else {
             array[pos] = null;
+            position--;
+        }
+    }
+    /**
+     * Класс реализует простой связанный список.
+     * @param <K> - ключ;
+     * @param <V> - объект.
+     */
+    private static class SimplyConnectedList<K, V> {
+        /**
+         * Размер.
+         */
+        private int size;
+        /**
+         * Начало списка.
+         */
+        private Node<K, V> first;
+        /**
+         * Метод добавляет элемент в список.
+         */
+        public void add(K key, V data) {
+            Node<K, V> newLink = new Node<>(key, data);
+            newLink.next = this.first;
+            this.first = newLink;
+            this.size++;
+        }
+        /**
+         * Удаляет элемент с заданным ключом.
+         * @param key - ключ.
+         */
+        public void delete(K key) {
+            if (first.key == key) {
+                first = first.next;
+            } else {
+                Node<K, V> current = first;
+                Node<K, V> previous;
+                for (int i = 0; i < size; i++) {
+                    previous = current;
+                    current = current.next;
+                    if (current.key == key) {
+                        previous.next = current.next;
+                        //first = current;
+                        size--;
+                        break;
+                    }
+                    if (current.next == null) {
+                        break;
+                    }
+                }
+            }
+        }
+        /**
+         * Метод возвращает элемент с заданным ключом.
+         * @param key - ключ.
+         */
+        public V get(K key) {
+            V result = null;
+            if (first.key.equals(key)) {
+                result = first.data;
+            } else {
+                Node<K, V> current = first;
+                for (int i = 0; i < size; i++) {
+                    current = current.next;
+                    if (current.key.equals(key)) {
+                        result = current.data;
+                        break;
+                    }
+                    if (current.next == null) {
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
+        /**
+         * Метод возвращает ключ по индексу.
+         * @param index - индекс;
+         * @return - ключ.
+         */
+        public K getKey(int index) {
+            K result = null;
+            if (index == 0) {
+                result = first.key;
+            } else {
+                Node<K, V> current = first;
+                for (int i = 0; i < index; i++) {
+                    current = current.next;
+                }
+                result = current.key;
+            }
+            return result;
+        }
+        /**
+         * Метод возвращает объект по индексу.
+         * @param index - индекс;
+         * @return - объект.
+         */
+        public V getData(int index) {
+            V result = null;
+            if (index == 0) {
+                result = first.data;
+            } else {
+                Node<K, V> current = first;
+                for (int i = 0; i < index; i++) {
+                    current = current.next;
+                }
+                result = current.data;
+            }
+            return result;
+        }
+        /**
+         * Метод возвращает количество элементов списка.
+         * @return - количество элементов.
+         */
+        public int getSize() {
+            return this.size;
+        }
+    }
+
+    /**
+     * Ячейка списка.
+     * @param <K> - ключ.
+     * @param <V> - объект.
+     */
+    private static class Node<K, V> {
+        /**
+         * Ключ.
+         */
+        K key;
+        /**
+         * Объект.
+         */
+        V data;
+        /**
+         * Ссылка на следующий объект.
+         */
+        Node<K, V> next;
+        /**
+         * Конструктор.
+         * @param key - ключ;
+         * @param data - объект.
+         */
+        Node(K key, V data) {
+            this.key = key;
+            this.data = data;
         }
     }
 }

@@ -13,41 +13,44 @@ import static org.hamcrest.core.Is.is;
  */
 public class HashMapClassTest {
 
-    HashMapClass test = new HashMapClass<>();
-    User userOne = new User("FirstUserName", "FirstUserSurname", 1212, 121212, 30);
-    User userTwo = new User("SecondUserName", "SecondUserSurname", 5896, 288796, 28);
-    User userThree = new User("ThirdUserName", "ThirdUserSurname", 7895, 284896, 55);
+    HashMapClass<String, User> test = new HashMapClass<>();
     User userNull = null;
 
     @Test
-    public void whenHasCycle() {
-        test.insert(userOne.hashCode(), userOne);
-        test.insert(userTwo.hashCode(), userTwo);
-        test.insert(userThree.hashCode(), userThree);
-        assertThat(test.get(userOne.hashCode()), is(userOne));
-        assertThat(test.get(userTwo.hashCode()), is(userTwo));
-        assertThat(test.get(userThree.hashCode()), is(userThree));
-        test.delete(userOne.hashCode());
-        test.delete(userTwo.hashCode());
-        test.delete(userThree.hashCode());
-        assertThat(test.get(userOne.hashCode()), is(userNull));
-        assertThat(test.get(userTwo.hashCode()), is(userNull));
-        assertThat(test.get(userThree.hashCode()), is(userNull));
+    public void whenAdd20Get20Delete20() {
+        User[] users = new User[20];
+        String testName = "Test Name";
+        String testSurname = "Test Surname";
+        int testPassport = 1234567890;
+        int testAge = 0;
+        int i = 0;
+        while (i < 20) {
+            User user = new User(testName + " " + i, testSurname + " " + i, String.valueOf(testPassport + i), testAge + i);
+            users[i] = user;
+            test.insert(user.passport, user);
+            i++;
+        }
+        int j = 0;
+        while (j < 20) {
+            assertThat(test.get(users[j].passport), is(users[j]));
+            test.delete(users[j].passport);
+            assertThat(test.get(users[j].passport), is(userNull));
+            j++;
+        }
+
     }
 
     private static class User {
 
         String name;
         String surname;
-        int passportSeries;
-        int passportNumber;
+        String passport;
         int age;
 
-        public User(String name, String surname, int passportSeries, int passportNumber, int age) {
+        public User(String name, String surname, String passport, int age) {
             this.name = name;
             this.surname = surname;
-            this.passportSeries = passportSeries;
-            this.passportNumber = passportNumber;
+            this.passport = passport;
             this.age = age;
         }
 
@@ -60,8 +63,7 @@ public class HashMapClassTest {
                 return false;
             }
             User user = (User) o;
-            return passportSeries == user.passportSeries
-                    && passportNumber == user.passportNumber
+            return passport == user.passport
                     && age == user.age
                     && Objects.equals(name, user.name)
                     && Objects.equals(surname, user.surname);
@@ -70,8 +72,7 @@ public class HashMapClassTest {
         @Override
         public int hashCode() {
             int result = 31;
-            result = result * passportSeries;
-            result = result * passportNumber;
+            result = result * passport.hashCode();
             result = result * age;
             return result;
         }
