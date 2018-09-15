@@ -61,9 +61,9 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
     public void isBinaryTest(Node<E> node) {
         if (node.leaves().size() > 0 && node.leaves().size() <= 2) {
-            for (int i = 0; i < node.leaves().size(); i++) {
-                if (node.leaves().get(i).leaves().size() > 0 && node.leaves().get(i).leaves().size() <= 2) {
-                    isBinaryTest(node.leaves().get(i));
+            for (Node check : node.leaves()) {
+                if (check.leaves().size() > 0 && check.leaves().size() <= 2) {
+                    isBinaryTest(check);
                 }
             }
         } else if (node.leaves().size() == 0) {
