@@ -18,26 +18,25 @@ public class HashMapClassTest {
 
     @Test
     public void whenAdd20Get20Delete20() {
-        User[] users = new User[20];
+        User[] users = new User[1200];
         String testName = "Test Name";
         String testSurname = "Test Surname";
         int testPassport = 1234567890;
         int testAge = 0;
         int i = 0;
-        while (i < 20) {
+        while (i < 1200) {
             User user = new User(testName + " " + i, testSurname + " " + i, String.valueOf(testPassport + i), testAge + i);
             users[i] = user;
             test.insert(user.passport, user);
             i++;
         }
         int j = 0;
-        while (j < 20) {
+        while (j < 1200) {
             assertThat(test.get(users[j].passport), is(users[j]));
             test.delete(users[j].passport);
-            assertThat(test.get(users[j].passport), is(userNull));
             j++;
         }
-
+        assertThat(test.size(), is(0));
     }
 
     private static class User {

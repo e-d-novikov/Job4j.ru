@@ -45,7 +45,7 @@ public class HashMapClass<K, V> {
             SimplyConnectedList[] newArray = array;
             this.array = new SimplyConnectedList[capacity];
             for (int i = 0; i < newArray.length; i++) {
-                if (newArray[i].getSize() != 0) {
+                if (newArray[i] != null && newArray[i].getSize() != 0) {
                     int index = newArray[i].getSize();
                     for (int j = 0; j < index; j++) {
                         insert((K) newArray[i].getKey(j), (V) newArray[i].getData(j));
@@ -104,7 +104,7 @@ public class HashMapClass<K, V> {
     public V get(K key) {
         V result = null;
         int pos = position(Math.abs(key.hashCode()));
-        if (array[pos] != null) {
+        if (!array[pos].equals(null)) {
             result = (V) array[pos].get(key);
         }
         return result;
@@ -124,6 +124,13 @@ public class HashMapClass<K, V> {
         }
     }
     /**
+     * Метод количество элементов коллекции.
+     * @return - количество элементов.
+     */
+    public int size() {
+        return position;
+    }
+    /**
      * Класс реализует простой связанный список.
      * @param <K> - ключ;
      * @param <V> - объект.
@@ -140,7 +147,7 @@ public class HashMapClass<K, V> {
         /**
          * Метод добавляет элемент в список.
          */
-        public void add(K key, V data) {
+        private void add(K key, V data) {
             Node<K, V> newLink = new Node<>(key, data);
             newLink.next = this.first;
             this.first = newLink;
@@ -150,7 +157,7 @@ public class HashMapClass<K, V> {
          * Удаляет элемент с заданным ключом.
          * @param key - ключ.
          */
-        public void delete(K key) {
+        private void delete(K key) {
             if (first.key == key) {
                 first = first.next;
             } else {
@@ -175,7 +182,7 @@ public class HashMapClass<K, V> {
          * Метод возвращает элемент с заданным ключом.
          * @param key - ключ.
          */
-        public V get(K key) {
+        private V get(K key) {
             V result = null;
             if (first.key.equals(key)) {
                 result = first.data;
@@ -199,7 +206,7 @@ public class HashMapClass<K, V> {
          * @param index - индекс;
          * @return - ключ.
          */
-        public K getKey(int index) {
+        private K getKey(int index) {
             K result = null;
             if (index == 0) {
                 result = first.key;
@@ -217,7 +224,7 @@ public class HashMapClass<K, V> {
          * @param index - индекс;
          * @return - объект.
          */
-        public V getData(int index) {
+        private V getData(int index) {
             V result = null;
             if (index == 0) {
                 result = first.data;
@@ -234,11 +241,10 @@ public class HashMapClass<K, V> {
          * Метод возвращает количество элементов списка.
          * @return - количество элементов.
          */
-        public int getSize() {
+        private int getSize() {
             return this.size;
         }
     }
-
     /**
      * Ячейка списка.
      * @param <K> - ключ.
