@@ -63,7 +63,7 @@ public class TreeTest {
         tree.add(1, 4);
         tree.add(4, 5);
         tree.add(5, 6);
-        assertThat(tree.isBunary(), is(false));
+        assertThat(tree.isBinary(), is(false));
     }
 
     @Test
@@ -76,6 +76,6 @@ public class TreeTest {
         tree.add(2, 5);
         tree.add(3, 6);
         tree.add(3, 7);
-        assertThat(tree.isBunary(), is(true));
+        assertThat(tree.isBinary(), is(true));
     }
 }
