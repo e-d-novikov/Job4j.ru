@@ -8,7 +8,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private ArrayList<E> unPack = new ArrayList<>();
 
     private int position = 0;
-    private boolean binary = true;
 
     public Tree(E value) {
         root = new Node<>(value);
@@ -60,23 +59,15 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         }
     }
 
-    public void isBinaryTest(Node<E> node) {
-        if (node.children.size() > 0 && node.children.size() <= 2) {
-            for (Node check : node.children) {
-                if (check.children.size() > 0 && check.children.size() <= 2) {
-                    isBinaryTest(check);
-                }
-            }
-        } else if (node.children.size() == 0) {
-            binary = true;
-        } else {
-            binary = false;
-        }
-    }
-
     public boolean isBinary() {
-        isBinaryTest(root);
-        boolean result = binary;
+        boolean result = true;
+        unPack(root);
+        for (int i = 0; i < position; i++) {
+            if (findBy(unPack.get(i)).get().children.size() > 2) {
+                result = false;
+                break;
+            }
+        }
         return result;
     }
 
