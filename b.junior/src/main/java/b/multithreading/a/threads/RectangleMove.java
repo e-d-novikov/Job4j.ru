@@ -21,7 +21,7 @@ public class RectangleMove implements Runnable {
     public void run() {
         int deltaX = 1;
         int deltaY = 1;
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             if (rect.getX() == 290) {
                 deltaX = -1;
             } else if (rect.getX() == 0) {
@@ -38,8 +38,7 @@ public class RectangleMove implements Runnable {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 System.out.println("Stop thread");
-                break;
-                //e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
     }
