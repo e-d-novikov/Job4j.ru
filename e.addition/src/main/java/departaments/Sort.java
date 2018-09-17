@@ -7,16 +7,22 @@ import java.util.*;
 
 public class Sort {
 
-    private ArrayList<Dep> addDep(String[] units) {
-        ArrayList<Dep> departaments = new ArrayList<>();
+    private TreeSet<String> add(String[] units) {
+        TreeSet<String> newUnits = new TreeSet<>();
         for (String unit : units) {
-            Dep dep = new Dep();
-            for (String str : unit.split("\\\\")) {
-                dep.add(str);
+            String[] oneUnit = unit.split("\\\\");
+            String[] twoUnit = new String[oneUnit.length];
+            for (int i = 0; i < oneUnit.length; i++) {
+                if (i == 0) {
+                    twoUnit[i] = oneUnit[i];
+                    newUnits.add(twoUnit[i]);
+                } else {
+                    twoUnit[i] = twoUnit[i - 1] + "\\" + oneUnit[i];
+                    newUnits.add(twoUnit[i]);
+                }
             }
-            departaments.add(dep);
         }
-        return departaments;
+        return newUnits;
     }
     /**
      * Метод sor принимает массив департаментов,
@@ -24,15 +30,12 @@ public class Sort {
      * директориями верхнего уровня, отсортированный
      * в лексографическом порядке.
      */
-    public String[] sortInOrder(String[] units) {
-        ArrayList<Dep> departaments = addDep(units);
-        TreeSet<String> sorted = new TreeSet<>();
-        for (Dep res : departaments) {
-           for (String str : res.getDep()) {
-               sorted.add(str);
-           }
+    public String[] sortInOrder(String[] deps) {
+        TreeSet<String> units = add(deps);
+        String[] result = new String[units.size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = units.pollFirst();
         }
-        String[] result = sorted.toArray(new String[0]);
         return result;
     }
     /**
@@ -42,38 +45,48 @@ public class Sort {
      * в лексографическом порядке по убыванию.
      */
     public String[] sortInDicreasingOrder(String[] units) {
-        ArrayList<Dep> departaments = addDep(units);
-        departaments.sort(new Comparator<Dep>() {
+        ArrayList<String> departaments = new ArrayList<>(add(units));
+        departaments.sort(new Comparator<String>() {
             @Override
-            public int compare(Dep o1, Dep o2) {
+            public int compare(String o1, String o2) {
                 int result = 0;
-                if (o1.size() < o2.size()) {
-                    for (int i = 0; i < o1.size(); i++) {
-                        result = result + o2.getDep().get(i).compareTo(o1.getDep().get(i));
+                int o1Length = o1.length();
+                int o2Length = o2.length();
+                if (o1.length() > o2.length()) {
+                    for (int i = 0; i < o2.split("\\\\").length; i++) {
+                        int comp = o2.split("\\\\")[i].compareTo(o1.split("\\\\")[i]);
+                        int length = o2.split("\\\\")[i].length();
+                        if (comp > 0) {
+                            result = result + comp + length - o1Length;
+                        } else if (comp < 0) {
+                            result = result + comp - length - o1Length;
+                        }
                     }
-                } else if (o1.size() > o2.size()) {
-                    for (int i = 0; i < o2.size(); i++) {
-                        result = result + o2.getDep().get(i).compareTo(o1.getDep().get(i));
+                } else if (o2.length() > o1.length()) {
+                    for (int i = 0; i < o1.split("\\\\").length; i++) {
+                        int comp = o2.split("\\\\")[i].compareTo(o1.split("\\\\")[i]);
+                        int length = o1.split("\\\\")[i].length();
+                        if (comp > 0) {
+                            result = result + comp + length - o2Length;
+                        } else if (comp < 0) {
+                            result = result + comp - length - o2Length;
+                        }
                     }
                 } else {
-                    for (int i = 0; i < o1.size(); i++) {
-                        result = result + o2.getDep().get(i).compareTo(o1.getDep().get(i));
+                    for (int i = 0; i < o1.split("\\\\").length; i++) {
+                        int comp = o2.split("\\\\")[i].compareTo(o1.split("\\\\")[i]);
+                        int length = o1.split("\\\\")[i].length();
+                        if (comp > 0) {
+                            result = result + comp + length - o1Length;
+                        } else if (comp < 0) {
+                            result = result + comp - length - o1Length;
+                        }
                     }
                 }
                 return result;
             }
         });
-        ArrayList<String> sorted = new ArrayList<>();
-        for (Dep res : departaments) {
-            for (String str : res.getDep()) {
-                if (sorted.contains(str)) {
-                    continue;
-                } else {
-                    sorted.add(str);
-                }
-            }
-        }
-        String[] result = sorted.toArray(new String[0]);
+        String[] result = departaments.toArray(new String[0]);
         return result;
     }
 }

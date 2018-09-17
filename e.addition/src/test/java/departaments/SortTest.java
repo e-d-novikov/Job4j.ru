@@ -23,7 +23,6 @@ public class SortTest {
         assertThat(test.sortInOrder(departaments), is(result));
     }
 
-
     @Test
     public void whenSortAscendingTwo() {
         Sort test = new Sort();
@@ -45,7 +44,6 @@ public class SortTest {
         result[13] = "K3";
         assertThat(test.sortInOrder(departaments), is(result));
     }
-
 
     @Test
     public void whenSortInDicreasingOrderOne() {
