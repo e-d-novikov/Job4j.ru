@@ -3,7 +3,7 @@ package a.collections.pro.a.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 /**
- * Class EvenNumbersTest tests methods from class EvenNumbers.
+ * Class Converter.
  *
  * @author Egor Novikov
  * E-mail: e.novikov@yahoo.com

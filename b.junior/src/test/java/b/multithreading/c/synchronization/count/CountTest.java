@@ -1,4 +1,4 @@
-package b.multithreading.c.synchronization;
+package b.multithreading.c.synchronization.count;
 
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;

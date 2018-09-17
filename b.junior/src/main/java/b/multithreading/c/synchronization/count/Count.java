@@ -1,4 +1,4 @@
-package b.multithreading.c.synchronization;
+package b.multithreading.c.synchronization.count;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;

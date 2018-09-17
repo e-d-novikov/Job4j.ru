@@ -16,6 +16,7 @@ public class SimplyConnectedList<K, V> {
      * Top of list.
      */
     private Node<K, V> first;
+
     /**
      * The method inserts data into the top of the list.
      */
@@ -25,6 +26,7 @@ public class SimplyConnectedList<K, V> {
         this.first = newLink;
         this.size++;
     }
+
     /**
      * Method for removing the first item in the list.
      */
@@ -49,6 +51,7 @@ public class SimplyConnectedList<K, V> {
             }
         }
     }
+
     /**
      * Method of obtaining an element by index.
      */
@@ -71,6 +74,35 @@ public class SimplyConnectedList<K, V> {
         }
         return result;
     }
+
+    public K getKey(int index) {
+        K result = null;
+        if (index == 0) {
+            result = first.key;
+        } else {
+            Node<K, V> current = first;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
+            result = current.key;
+        }
+        return result;
+    }
+
+    public V getData(int index) {
+        V result = null;
+        if (index == 0) {
+            result = first.data;
+        } else {
+            Node<K, V> current = first;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
+            result = current.data;
+        }
+        return result;
+    }
+
     /**
      * Method of obtaining the size of the collection.
      */
@@ -80,15 +112,17 @@ public class SimplyConnectedList<K, V> {
     /**
      * The class is intended for data storage.
      */
-    private static class Node<K, V> {
+    public static class Node<K, V> {
 
         K key;
         V data;
+        //int hash;
         Node<K, V> next;
 
         Node(K key, V data) {
             this.key = key;
             this.data = data;
+            //this.hash = data.hashCode();
         }
     }
 }
