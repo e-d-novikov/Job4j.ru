@@ -13,7 +13,7 @@ import static org.hamcrest.core.Is.is;
  */
 public class UserStorageTest {
 
-    UserStorage stor = new UserStorage(10);
+    UserStorage stor = new UserStorage();
 
     @Test
     public void whenHasCycle() {
