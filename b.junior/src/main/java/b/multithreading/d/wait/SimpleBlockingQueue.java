@@ -10,7 +10,7 @@ public class SimpleBlockingQueue<T> {
 
     @GuardedBy("this")
     private final Queue<T> queue = new LinkedList<>();
-    private int limit;
+    private final int limit;
 
     public SimpleBlockingQueue(int limit) {
         this.limit = limit;
@@ -26,13 +26,11 @@ public class SimpleBlockingQueue<T> {
     }
 
     public T poll() throws InterruptedException {
-        T result = null;
         synchronized (this.queue) {
             if (queue.size() == 1) {
                 queue.notify();
             }
-            result = queue.poll();
-            return result;
+            return queue.poll();
         }
     }
 
