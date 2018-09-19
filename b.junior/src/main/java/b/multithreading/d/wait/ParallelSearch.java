@@ -19,7 +19,6 @@ public class ParallelSearch {
                         e.printStackTrace();
                     }
                 }
-
             }
         };
         Thread consumer = new Thread() {
