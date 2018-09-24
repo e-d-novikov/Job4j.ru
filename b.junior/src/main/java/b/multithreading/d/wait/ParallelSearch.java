@@ -21,10 +21,11 @@ public class ParallelSearch {
                 }
             }
         };
+        producer.start();
         Thread consumer = new Thread() {
             @Override
             public void run() {
-                while (producer.isAlive()) {
+                while (!Thread.currentThread().isInterrupted()) {
                     try {
                         System.out.println(test.poll());
                         Thread.sleep(25);
@@ -35,9 +36,9 @@ public class ParallelSearch {
                 }
             }
         };
-        producer.start();
         consumer.start();
         producer.join();
+        consumer.interrupt();
         consumer.join();
     }
 }
