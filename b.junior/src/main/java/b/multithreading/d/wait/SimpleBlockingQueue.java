@@ -34,7 +34,7 @@ public class SimpleBlockingQueue<T> {
         }
     }
 
-    public Queue<T> getQueue() {
-        return this.queue;
+    public boolean isEmpty() {
+        return queue.isEmpty();
     }
 }
