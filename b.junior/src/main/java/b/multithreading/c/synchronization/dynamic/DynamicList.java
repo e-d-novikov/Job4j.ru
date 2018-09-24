@@ -11,31 +11,28 @@ import java.util.Iterator;
  * @version 1$
  * @since 0.1
  */
-public class DynamicList<T> extends DynamicContainer<T> {
+public class DynamicList<T> implements Iterable<T> {
 
-  private T[] iterator;
-
+  private DynamicContainer<T> container;
   private ArrayList<T> list = new ArrayList<>();
   /**
    * Constructor.
    * @param size - start size.
    */
   public DynamicList(int size) {
-    super(size);
+    container = new DynamicContainer<>(size);
   }
 
-  @Override
   public synchronized void add(T object) {
-    super.add(object);
+    container.add(object);
   }
 
-  @Override
   public synchronized T get(int index) {
-    return super.get(index);
+    return container.get(index);
   }
 
   private void copy() {
-    Collections.addAll(list, super.getList());
+    Collections.addAll(list, container.getList());
   }
 
   @Override
