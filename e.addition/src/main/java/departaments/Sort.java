@@ -31,12 +31,7 @@ public class Sort {
      * в лексографическом порядке.
      */
     public String[] sortInOrder(String[] deps) {
-        TreeSet<String> units = add(deps);
-        String[] result = new String[units.size()];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = units.pollFirst();
-        }
-        return result;
+        return add(deps).toArray(new String[0]);
     }
     /**
      * Метод sortInDicreasingOrder принимает массив департаментов,
