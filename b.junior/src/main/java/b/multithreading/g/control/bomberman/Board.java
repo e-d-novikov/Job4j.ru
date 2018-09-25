@@ -24,13 +24,156 @@ public class Board {
   private int y = 0;
   /**
    * Передвижение героя.
-   * @param source - ячейка из которой совершается ход.
-   * @param dist - ячейка в которую совершается ход.
    */
-  private void move(ReentrantLock source, ReentrantLock dist) {
-    source = new Cell();
-    dist = new Cell(new Hero());
-    System.out.println(String.valueOf(x + " " + y));
+  private void move() throws InterruptedException {
+    board[x][y].lock();
+    int z = route();
+    int g = route();
+    if (g > 0) {
+      if (x == 0 && y == 0) {
+        if (board[x + 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x + 1][y] = new Cell(new Hero());
+          x++;
+        } else if (board[x][y + 1].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y + 1] = new Cell(new Hero());
+          y++;
+        }
+      } else if (x == board.length - 1 && y == board.length - 1) {
+        if (board[x - 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x - 1][y] = new Cell(new Hero());
+          x--;
+        } else if (board[x][y - 1].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y - 1] = new Cell(new Hero());
+          y--;
+        }
+      } else if (x == 0) {
+        if (board[x + 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x + 1][y] = new Cell(new Hero());
+          x++;
+        } else if (board[x][y + z].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y + z] = new Cell(new Hero());
+          y = y + z;
+        }
+      } else if (y == 0) {
+        if (board[x][y + 1].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y + 1] = new Cell(new Hero());
+          y++;
+        } else if (board[x + z][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x + z][y] = new Cell(new Hero());
+          x = x + z;
+        }
+      } else if (x == board.length) {
+        if (board[x - 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x - 1][y] = new Cell(new Hero());
+          x--;
+        } else if (board[x][y + z].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y + z] = new Cell(new Hero());
+          y = y + z;
+        }
+      } else if (y == board.length) {
+        if (board[x][y - 1].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y - 1] = new Cell(new Hero());
+          y--;
+        } else if (board[x + z][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x + z][y] = new Cell(new Hero());
+          x = x + z;
+        }
+      } else {
+        if (board[x + z][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x + z][y] = new Cell(new Hero());
+          x = x + z;
+        } else if (board[x][y + z].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y + z] = new Cell(new Hero());
+          y = y + z;
+        }
+      }
+    } else if (g < 0) {
+      if (x == 0 && y == 0) {
+        if (board[x][y + 1].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y + 1] = new Cell(new Hero());
+          y++;
+        } else if (board[x + 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x + 1][y] = new Cell(new Hero());
+          x++;
+        }
+      } else if (x == board.length - 1 && y == board.length - 1) {
+        if (board[x][y - 1].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y - 1] = new Cell(new Hero());
+          y--;
+        } else if (board[x - 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x - 1][y] = new Cell(new Hero());
+          x--;
+        }
+      } else if (x == 0) {
+        if (board[x][y + z].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y + z] = new Cell(new Hero());
+          y = y + z;
+        } else if (board[x + 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x + 1][y] = new Cell(new Hero());
+          x++;
+        }
+      } else if (y == 0) {
+        if (board[x + z][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x + z][y] = new Cell(new Hero());
+          x = x + z;
+        } else if (board[x][y + 1].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y + 1] = new Cell(new Hero());
+          y++;
+        }
+      } else if (x == board.length) {
+        if (board[x][y + z].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y + z] = new Cell(new Hero());
+          y = y + z;
+        } else if (board[x - 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x - 1][y] = new Cell(new Hero());
+          x--;
+        }
+      } else if (y == board.length) {
+        if (board[x + z][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x + z][y] = new Cell(new Hero());
+          x = x + z;
+        } else if (board[x][y - 1].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y - 1] = new Cell(new Hero());
+          y--;
+        }
+      } else {
+        if (board[x][y + z].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x][y + z] = new Cell(new Hero());
+          y = y + z;
+        } else if (board[x + z][y].tryLock(500, TimeUnit.MILLISECONDS)) {
+          board[x][y] = new Cell();
+          board[x + z][y] = new Cell(new Hero());
+          x = x + z;
+        }
+      }
+    }
   }
   /**
    * Генерация случайного числа.
@@ -63,134 +206,15 @@ public class Board {
   /**
    * Поток передвижения героя.
    */
-    Thread hero = new Thread() {
+    private Thread hero = new Thread() {
       @Override
       public void run() {
         while (true) {
-          int z = route();
-          int g = route();
-          board[x][y].lock();
           try {
             /**
              * Передвижение героя в случайном порядке.
              */
-            if (g > 0) {
-              if (x == 0 && y == 0) {
-                if (board[x + 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x + 1][y]);
-                  x++;
-                } else if (board[x][y + 1].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y + 1]);
-                  y++;
-                }
-              } else if (x == board.length - 1 && y == board.length - 1) {
-                if (board[x - 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x - 1][y]);
-                  x--;
-                } else if (board[x][y - 1].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y - 1]);
-                  y--;
-                }
-              } else if (x == 0) {
-                if (board[x + 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x + 1][y]);
-                  x++;
-                } else if (board[x][y + z].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y + z]);
-                  y = y + z;
-                }
-              } else if (y == 0) {
-                if (board[x][y + 1].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y + 1]);
-                  y++;
-                } else if (board[x + z][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x + z][y]);
-                  x = x + z;
-                }
-              } else if (x == board.length) {
-                if (board[x - 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x - 1][y]);
-                  x--;
-                } else if (board[x][y + z].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y + z]);
-                  y = y + z;
-                }
-              } else if (y == board.length) {
-                if (board[x][y - 1].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y - 1]);
-                  y--;
-                } else if (board[x + z][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x + z][y]);
-                  x = x + z;
-                }
-              } else {
-                if (board[x + z][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x + z][y]);
-                  x = x + z;
-                } else if (board[x][y + z].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y + z]);
-                  y = y + z;
-                }
-              }
-            } else if (g < 0) {
-              if (x == 0 && y == 0) {
-                if (board[x][y + 1].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y + 1]);
-                  y++;
-                } else if (board[x + 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x + 1][y]);
-                  x++;
-                }
-              } else if (x == board.length - 1 && y == board.length - 1) {
-                if (board[x][y - 1].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y - 1]);
-                  y--;
-                } else if (board[x - 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x - 1][y]);
-                  x--;
-                }
-              } else if (x == 0) {
-                if (board[x][y + z].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y + z]);
-                  y = y + z;
-                } else if (board[x + 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x + 1][y]);
-                  x++;
-                }
-              } else if (y == 0) {
-                if (board[x + z][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x + z][y]);
-                  x = x + z;
-                } else if (board[x][y + 1].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y + 1]);
-                  y++;
-                }
-              } else if (x == board.length) {
-                if (board[x][y + z].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y + z]);
-                  y = y + z;
-                } else if (board[x - 1][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x - 1][y]);
-                  x--;
-                }
-              } else if (y == board.length) {
-                if (board[x + z][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x + z][y]);
-                  x = x + z;
-                } else if (board[x][y - 1].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y - 1]);
-                  y--;
-                }
-              } else {
-                if (board[x][y + z].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x][y + z]);
-                  y = y + z;
-                } else if (board[x + z][y].tryLock(500, TimeUnit.MILLISECONDS)) {
-                  move(board[x][y], board[x + z][y]);
-                  x = x + z;
-                }
-              }
-            }
+            move();
             Thread.sleep(1000);
           } catch (InterruptedException e) {
             e.printStackTrace();
