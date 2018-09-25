@@ -15,12 +15,14 @@ public class NonBlockingCache {
     }
 
     public void update(Base model) {
-        if (cache.get(model.getId()).getVersion() == model.getVersion()) {
-            model.setId(model.getId() + 1);
-            cache.computeIfPresent(model.getId(), (k, v) -> model);
-        } else {
-            throw new OptimisticException();
-        }
+        cache.computeIfPresent(model.getId(), (x, y) -> {
+            if (y.getVersion() == y.getVersion()) {
+                model.setVersion(model.getVersion() + 1);
+                return model;
+            } else {
+                throw new OptimisticException();
+            }
+        });
     }
 
     public void delete(Base model) {
