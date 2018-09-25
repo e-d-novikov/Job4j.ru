@@ -11,22 +11,29 @@ import java.util.concurrent.Executors;
  */
 public class EmailNotification {
 
-  ExecutorService pool = Executors.newFixedThreadPool(
+  private ExecutorService pool = Executors.newFixedThreadPool(
           Runtime.getRuntime().availableProcessors()
   );
 
   public void emailTo(User user) {
     pool.submit(new Runnable() {
       public void run() {
-        String subject = "Notification " + user.name + " to email " + user.email + ".";
-        String body = "Add a new event to " + user.name;
-        send(subject, body, user.email);
+        String subject = String.format("Notification %s to email %s.", user.getName(), user.getEmail());
+        String body = String.format("Add a new event to %s", user.getName());
+        send(subject, body, user.getEmail());
       }
     });
   }
 
   public void close() {
     pool.shutdown();
+    while (!pool.isTerminated()) {
+      try {
+        Thread.sleep(100);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   public void send(String suject, String body, String email) {
