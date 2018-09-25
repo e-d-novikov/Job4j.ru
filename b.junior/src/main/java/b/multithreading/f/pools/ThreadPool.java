@@ -12,7 +12,6 @@ import b.multithreading.d.wait.SimpleBlockingQueue;
  */
 public class ThreadPool {
 
-  boolean flag = true;
   private final List<Thread> threads = new LinkedList<>();
   private final SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>(10);
 
@@ -20,7 +19,7 @@ public class ThreadPool {
     int size = Runtime.getRuntime().availableProcessors();
     Thread thread = new Thread(
             () -> {
-              while (flag) {
+              while (!Thread.currentThread().isInterrupted()) {
                 try {
                   tasks.poll();
                   Thread.sleep(25);
@@ -44,6 +43,8 @@ public class ThreadPool {
   }
 
   public void shutdown() {
-    flag = false;
+   for (Thread thread : threads) {
+     thread.interrupt();
+   }
   }
 }
