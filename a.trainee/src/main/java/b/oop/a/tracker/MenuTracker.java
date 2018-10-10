@@ -57,12 +57,9 @@ public class MenuTracker {
     public void show() {
         printItem.accept("Application Editor");
         printItem.accept("Please select action:");
-        //System.out.println("Application Editor");
-        //System.out.println("Please select action:");
         for (UserAction action : this.actions) {
             if (action != null) {
                 printItem.accept(action.info());
-                //System.out.println(action.info());
             }
         }
     }
@@ -86,9 +83,8 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             String name = input.ask("Please enter a name:");
             String description = input.ask("Please enter the description of the application:");
-            Item item = new Item(name, description, System.currentTimeMillis());
-            tracker.add(item);
-            System.out.println("Application with ID: " + item.getId() + " created");
+            tracker.add(name, description);
+            System.out.println("Application created");
         }
     }
     /**
@@ -112,15 +108,10 @@ public class MenuTracker {
             if (tracker.isEmpty()) {
                 System.out.println("Edit application");
                 String id = input.ask("Enter the application ID:");
-                if (tracker.findById(id) != null) {
-                    String name = input.ask("Enter the name of the application:");
-                    String desc = input.ask("Please enter the description of the application:");
-                    Item item = new Item(name, desc, System.currentTimeMillis());
-                    tracker.replace(id, item);
-                    System.out.println("Application with ID:" + item.getId() + " updated");
-                } else {
-                    System.out.println("Application with ID:" + id + " does not exist");
-                }
+                String name = input.ask("Enter the name of the application:");
+                String desc = input.ask("Please enter the description of the application:");
+                tracker.replace(Integer.parseInt(id), name, desc);
+                System.out.println("Application updated");
             } else {
                 System.out.println("Currently there are no applications available");
             }
@@ -147,11 +138,7 @@ public class MenuTracker {
             if (tracker.isEmpty()) {
                 System.out.println("Delete an order");
                 String id = input.ask("Enter the application ID:");
-                if (tracker.delete(id)) {
-                    System.out.println("Application with ID: " + id + " removed");
-                } else {
-                    System.out.println("Application with ID:" + id + " does not exist");
-                }
+                tracker.delete(Integer.parseInt(id));
             } else {
                 System.out.println("Currently there are no applications available");
             }
@@ -177,9 +164,7 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             if (tracker.isEmpty()) {
                 System.out.println("Current applications:");
-                for (Item item : tracker.getAll()) {
-                    System.out.println(item.toString());
-                }
+                tracker.getAll();
             } else {
                 System.out.println("Currently there are no applications available");
             }
@@ -207,11 +192,7 @@ public class MenuTracker {
             if (tracker.isEmpty()) {
                 System.out.println("Search by ID");
                 String id = input.ask("Enter the application ID: ");
-                if (tracker.findById(id) != null) {
-                    System.out.println(tracker.findById(id).toString());
-                } else {
-                    System.out.println("Application with ID:" + id + " does not exist");
-                }
+                tracker.findById(Integer.parseInt(id));
             } else {
                 System.out.println("Currently there are no applications available");
             }
@@ -238,13 +219,7 @@ public class MenuTracker {
             if (tracker.isEmpty()) {
                 System.out.println("Search by name");
                 String name = input.ask("Enter the application name: ");
-                if (tracker.findByName(name).size() != 0) {
-                    for (Item item : tracker.findByName(name)) {
-                        System.out.println(item.toString());
-                    }
-                } else {
-                    System.out.println("Application with ID:" + name + " does not exist");
-                }
+                tracker.findByName(name);
             } else {
                 System.out.println("Currently there are no applications available");
             }
@@ -268,6 +243,7 @@ public class MenuTracker {
          * @param tracker - tracker.
          */
         public void execute(Input input, Tracker tracker) {
+
         }
     }
 }
