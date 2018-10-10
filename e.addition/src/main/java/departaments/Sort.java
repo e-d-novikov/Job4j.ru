@@ -45,39 +45,13 @@ public class Sort {
             @Override
             public int compare(String o1, String o2) {
                 int result = 0;
-                int o1Length = o1.length();
-                int o2Length = o2.length();
-                char[] o1Char =o1.toCharArray();
-                char[] o2Char =o2.toCharArray();
-                if (o1Length > o2Length) {
-                    for (int i = 0; i < o2Length; i++) {
-                        int comp = Character.toString(o2Char[i]).compareTo(Character.toString(o1Char[i]));
-                        if (comp > 0) {
-                            result = result + comp + o2Length - i;
-                        } else if (comp < 0) {
-                            result = result + comp - o2Length - i;
-                        }
-                    }
-                } else if (o2Length > o1Length) {
-                    for (int i = 0; i < o1Length; i++) {
-                        int comp = Character.toString(o2Char[i]).compareTo(Character.toString(o1Char[i]));
-                        if (comp > 0) {
-                            result = result + comp + o1Length - i;
-                        } else if (comp < 0) {
-                            result = result + comp - o1Length - i;
-                        }
-                    }
-                } else {
-                    for (int i = 0; i < o1Length; i++) {
-                        int comp = Character.toString(o2Char[i]).compareTo(Character.toString(o1Char[i]));
-                        if (comp > 0) {
-                            result = result + comp + o1Length - i;
-                        } else if (comp < 0) {
-                            result = result + comp - o1Length - i;
-                        }
+                for (int i = 0; i < Math.min(o1.length(), o2.length()); i++) {
+                    result = Character.compare(o2.charAt(i), o1.charAt(i));
+                    if (result != 0) {
+                        break;
                     }
                 }
-                return result;
+                return result != 0 ? result : Integer.compare(o1.length(), o2.length());
             }
         });
         return departaments.toArray(new String[0]);
