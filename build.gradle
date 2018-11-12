@@ -18,6 +18,7 @@ subprojects {
         compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.5.0'
         compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
         compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+        compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1'
     }
 
     javadoc {
