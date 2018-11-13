@@ -15,18 +15,54 @@ public class UserServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         res.setContentType("text/html");
-        PrintWriter writer = new PrintWriter(res.getOutputStream());
+
+        StringBuilder sb = new StringBuilder("<table>");
         for (User user : container.findAll()) {
-            writer.append(user.toString());
+            sb.append("<tr>"
+
+                    + "<td>"
+                    + user.toString()
+                    + "</td>"
+
+                    + "<td>"
+                    + "<form action=\"/edit\" method=\"get\">"
+                    + "<input type=\"hidden\" name=\"id\" value=\"" + user.getId() + "\">"
+                    + "<input type=\"hidden\" name=\"name\" value=\"" + user.getName() + "\">"
+                    + "<input type=\"hidden\" name=\"login\" value=\"" + user.getLogin() + "\">"
+                    + "<input type=\"hidden\" name=\"email\" value=\"" + user.getEmail() + "\">"
+                    + "<input type=\"hidden\" name=\"date\" value=\"" + user.getDate() + "\">"
+                    + "<input type='submit' name='Редактировать'>"
+                    + "</form>"
+                    + "</td>"
+
+                    + "<td>"
+                    + "<form action=\"/user\" method=\"post\">"
+                    + "<input type=\"hidden\" name=\"action\" value=\"delete\">"
+                    + "<input type=\"hidden\" name=\"id\" value=\"" + user.getId() + "\">"
+                    + "<input type='submit' name='Удалить'>"
+                    + "</form>"
+                    + "</td>"
+
+                    + "</tr>");
         }
+        sb.append("</table>");
+
+        PrintWriter writer = new PrintWriter(res.getOutputStream());
+        writer.append("<!DOCTYPE html>"
+                + "<html lang=\"en\">"
+                + "<head>"
+                + "<meta charset=\"UTF-16\">"
+                + "<title>Список пользователей</title>"
+                + "</head>"
+                + "<body>"
+                + "<form action=\"/create\" method=\"get\">"
+                + "<input type='submit' name='Создать'><br>"
+                + sb
+                + "</body>"
+                + "</html>");
         writer.flush();
     }
 
-    //Запросы для тестирования
-    //user?action=add&name=TestName&login=TestLogin&email=test@email.com&date=date
-    //user?action=add&name=TestName2&login=TestLogin2&email=test2@email.com&date=12112018
-    //user?action=update&id=0&name=UpdateName&login=UpdateLogin2&UpdateEmail=test2@email.com&date=12112018
-    //user?action=delete&id=1
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
@@ -45,6 +81,8 @@ public class UserServlet extends HttpServlet {
                     req.getParameter("date"));
         } else if (req.getParameter("action").equals("delete")) {
             container.delete(Integer.valueOf(req.getParameter("id")));
+            amount--;
         }
+        doGet(req, resp);
     }
 }

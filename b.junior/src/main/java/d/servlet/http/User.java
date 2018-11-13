@@ -20,6 +20,22 @@ public class User {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
     @Override
     public String toString() {
         return id + " " + name + " " + login + " " + email + " " + date;
