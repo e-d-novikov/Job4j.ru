@@ -20,6 +20,8 @@ subprojects {
         compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
         compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.1'
         compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.5.0'
+        compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+        compile group: 'taglibs', name: 'standard', version: '1.1.2'
     }
 
     javadoc {
