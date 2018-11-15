@@ -8,7 +8,7 @@ public class ValidateService {
     private final Store memory;
 
     public ValidateService() {
-        memory = MemoryStore.INSTANCE;
+        memory = DbStore.getInstance();
     }
 
     public static ValidateService getInstance() {
