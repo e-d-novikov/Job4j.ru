@@ -22,15 +22,13 @@ public class UserServlet extends HttpServlet {
             ValidateService.getInstance().add(new User(amount,
                     req.getParameter("name"),
                     req.getParameter("login"),
-                    req.getParameter("email"),
-                    req.getParameter("date")));
+                    req.getParameter("email")));
             amount++;
         } else if (req.getParameter("action").equals("update")) {
-            ValidateService.getInstance().update(Integer.valueOf(req.getParameter("id")),
+            ValidateService.getInstance().update(new User(Integer.valueOf(req.getParameter("id")),
                     req.getParameter("name"),
                     req.getParameter("login"),
-                    req.getParameter("email"),
-                    req.getParameter("date"));
+                    req.getParameter("email")));
         } else if (req.getParameter("action").equals("delete")) {
             ValidateService.getInstance().delete(Integer.valueOf(req.getParameter("id")));
             amount--;

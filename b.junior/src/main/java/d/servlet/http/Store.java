@@ -2,11 +2,11 @@ package d.servlet.http;
 
 import java.util.ArrayList;
 
-public interface Store {
+public interface Store<User> {
 
     void add(User user);
 
-    void update(int id, String name, String login, String email, String date);
+    void update(User user);
 
     void delete(int id);
 

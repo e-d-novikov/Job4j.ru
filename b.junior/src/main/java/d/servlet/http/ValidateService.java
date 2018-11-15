@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class ValidateService {
 
     private static volatile ValidateService instance = new ValidateService();
-    private final MemoryStore memory;
+    private final Store memory;
 
     public ValidateService() {
-        memory = MemoryStore.getInstance();
+        memory = MemoryStore.INSTANCE;
     }
 
     public static ValidateService getInstance() {
@@ -24,9 +24,9 @@ public class ValidateService {
         }
     }
 
-    public void update(int id, String name, String login, String email, String date) {
-        if (memory.availableId(id)) {
-            memory.update(id, name, login, email, date);
+    public void update(User user) {
+        if (memory.availableId(user.getId())) {
+            memory.update(user);
             System.out.println("Пользователь обновлен");
         } else {
             System.out.println("Пользователя с таким ID не существует");
@@ -53,7 +53,7 @@ public class ValidateService {
     public User findById(int id) {
         User result = null;
         if (memory.availableId(id)) {
-            result = memory.findById(id);
+            result = (User) memory.findById(id);
         }
         return result;
     }

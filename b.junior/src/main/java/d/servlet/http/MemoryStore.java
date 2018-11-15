@@ -3,25 +3,10 @@ package d.servlet.http;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class MemoryStore implements Store {
+public enum MemoryStore implements Store<User> {
 
-    private static volatile MemoryStore instance = null;
-    private final ConcurrentHashMap<Integer, User> users;
-
-    public MemoryStore() {
-        users = new ConcurrentHashMap<>();
-    }
-
-    public static MemoryStore getInstance() {
-        if (instance == null) {
-            synchronized (MemoryStore.class) {
-                if (instance == null) {
-                    instance = new MemoryStore();
-                }
-            }
-        }
-        return instance;
-    }
+    INSTANCE;
+    private final ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
 
     @Override
     public void add(User user) {
@@ -29,8 +14,8 @@ public class MemoryStore implements Store {
     }
 
     @Override
-    public void update(int id, String name, String login, String email, String date) {
-        users.put(id, new User(id, name, login, email, date));
+    public void update(User user) {
+        users.put(user.getId(), user);
     }
 
     @Override

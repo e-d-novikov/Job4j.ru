@@ -1,5 +1,8 @@
 package d.servlet.http;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class User {
 
     private final int id;
@@ -7,6 +10,14 @@ public class User {
     private final String login;
     private final String email;
     private final String date;
+
+    public User(int id, String name, String login, String email) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM uuuuг. HH:mm"));
+    }
 
     public User(int id, String name, String login, String email, String date) {
         this.id = id;
