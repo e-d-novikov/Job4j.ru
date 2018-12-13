@@ -50,4 +50,9 @@ public enum MemoryStore implements Store<User> {
     public int getSize() {
         return users.size();
     }
+
+    @Override
+    public boolean isCredentional(String login, String password) {
+        return false;
+    }
 }

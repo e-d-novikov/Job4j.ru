@@ -1,54 +1,50 @@
 package d.servlet.http;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class User {
 
-    private final int id;
-    private final String name;
+    private final Integer id;
     private final String login;
+    private final String password;
+    private final String role;
+    private final String name;
+    private final String sername;
     private final String email;
-    private final String date;
 
-    public User(int id, String name, String login, String email) {
+    public User(Integer id, String login, String password, String role, String name, String sername, String email) {
         this.id = id;
-        this.name = name;
         this.login = login;
+        this.password = password;
+        this.role = role;
+        this.name = name;
+        this.sername = sername;
         this.email = email;
-        this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM uuuuг. HH:mm"));
     }
 
-    public User(int id, String name, String login, String email, String date) {
-        this.id = id;
-        this.name = name;
-        this.login = login;
-        this.email = email;
-        this.date = date;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getLogin() {
         return login;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSername() {
+        return sername;
+    }
+
     public String getEmail() {
         return email;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    @Override
-    public String toString() {
-        return id + " " + name + " " + login + " " + email + " " + date;
     }
 }

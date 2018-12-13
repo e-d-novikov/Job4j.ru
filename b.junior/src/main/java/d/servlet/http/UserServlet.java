@@ -1,43 +1,47 @@
 package d.servlet.http;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+@WebServlet("/UserServlet")
 public class UserServlet extends HttpServlet {
-
-    private int amount = 0;
-
-    @Override
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.setAttribute("users", ValidateService.getInstance().findAll());
-        req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        if (req.getParameter("action").equals("add")) {
-            ValidateService.getInstance().add(new User(amount,
-                    req.getParameter("name"),
-                    req.getParameter("login"),
-                    req.getParameter("email")));
-            amount++;
-        } else if (req.getParameter("action").equals("update")) {
+        if (req.getParameter("action").equals("edit")) {
+            HttpSession session = req.getSession();
+            req.setAttribute("user", ValidateService.getInstance().findById(req.getParameter("login")));
+            req.setAttribute("servlet", "UserServlet");
+            req.getRequestDispatcher("/WEB-INF/views/EditUser.jsp").forward(req, resp);
+        } else if (req.getParameter("action").equals("apply")) {
+            HttpSession session = req.getSession();
+            String login = (String) session.getAttribute("login");
+            User user = ValidateService.getInstance().findById(login);
+            String oldLogin = req.getParameter("oldLogin");
+            String oldPassword = req.getParameter("oldPassword");
+            String newLogin = req.getParameter("login");
+            String newPassword = req.getParameter("password");
             ValidateService.getInstance().update(new User(Integer.valueOf(req.getParameter("id")),
-                    req.getParameter("name"),
                     req.getParameter("login"),
+                    req.getParameter("password"),
+                    req.getParameter("role"),
+                    req.getParameter("name"),
+                    req.getParameter("sername"),
                     req.getParameter("email")));
-        } else if (req.getParameter("action").equals("delete")) {
-            ValidateService.getInstance().delete(Integer.valueOf(req.getParameter("id")));
-            amount--;
-        } else if (req.getParameter("action").equals("create")) {
-            req.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(req, resp);
-        } else if (req.getParameter("action").equals("edit")) {
-            req.getRequestDispatcher("/WEB-INF/views/edit.jsp").forward(req, resp);
+
+            if (login.equals(oldLogin)) {
+                if (!oldLogin.equals(newLogin) || !oldPassword.equals(newPassword)) {
+                    req.getRequestDispatcher("/LogoutServlet").forward(req, resp);
+                }
+            }
+            req.setAttribute("user", ValidateService.getInstance().findById((String) session.getAttribute("login")));
+            req.getRequestDispatcher("/WEB-INF/views/UserPage.jsp").forward(req, resp);
         }
-        resp.sendRedirect(String.format("%s/", req.getContextPath()));
     }
 }

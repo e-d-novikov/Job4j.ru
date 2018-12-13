@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class ValidateService {
 
     private static volatile ValidateService instance = new ValidateService();
-    private final Store memory;
+    private final DbStore memory;
 
     public ValidateService() {
         memory = DbStore.getInstance();
@@ -16,45 +16,30 @@ public class ValidateService {
     }
 
     public void add(User user) {
-        if (!memory.availableId(user.getId())) {
-            memory.add(user);
-            System.out.println("Пользователь добавлен");
-        } else {
-            System.out.println("Пользователь с таким ID уже существует");
-        }
+        memory.createUser(user);
     }
 
     public void update(User user) {
-        if (memory.availableId(user.getId())) {
-            memory.update(user);
-            System.out.println("Пользователь обновлен");
-        } else {
-            System.out.println("Пользователя с таким ID не существует");
-        }
+        memory.editUser(user);
     }
 
-    public void delete(int id) {
-        if (memory.availableId(id)) {
-            memory.delete(id);
-            System.out.println("Пользователь удален");
-        } else {
-            System.out.println("Пользователя с таким ID не существует");
-        }
+    public void delete(String login) {
+        memory.deleteUser(login);
     }
 
     public ArrayList<User> findAll() {
         ArrayList<User> result = null;
         if (memory.getSize() > 0) {
-            result = memory.findAll();
+            result = memory.findAllUsers();
         }
         return result;
     }
 
-    public User findById(int id) {
-        User result = null;
-        if (memory.availableId(id)) {
-            result = (User) memory.findById(id);
-        }
-        return result;
+    public User findById(String login) {
+        return memory.findById(login);
+    }
+
+    public boolean isCredentional(String login, String password) {
+        return memory.isCredentional(login, password);
     }
 }

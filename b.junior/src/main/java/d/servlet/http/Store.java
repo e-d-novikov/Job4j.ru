@@ -17,4 +17,6 @@ public interface Store<User> {
     boolean availableId(int id);
 
     int getSize();
+
+    boolean isCredentional(String login, String password);
 }

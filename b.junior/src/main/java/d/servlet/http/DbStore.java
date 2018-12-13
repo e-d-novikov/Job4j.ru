@@ -4,16 +4,13 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class DbStore implements Store<User> {
+public class DbStore {
 
     private static final Logger LOG = LoggerFactory.getLogger(DbStore.class);
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static DbStore instance = new DbStore();
-
 
     public DbStore() {
         SOURCE.setDriverClassName("org.postgresql.Driver");
@@ -23,79 +20,25 @@ public class DbStore implements Store<User> {
         SOURCE.setMinIdle(5);
         SOURCE.setMaxIdle(10);
         SOURCE.setMaxOpenPreparedStatements(100);
-        createTable();
     }
 
     public static DbStore getInstance() {
         return instance;
     }
 
-    private void createTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS users("
-                + "id serial primary key,"
-                + "user_id int,"
-                + "name character varying (200),"
-                + "login character varying (200),"
-                + "email character varying (200),"
-                + "date character varying (100));";
-        Connection connection = null;
-        try {
-            connection = SOURCE.getConnection();
-            Statement statment = connection.createStatement();
-            statment.execute(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void add(User user) {
+    public void createUser(User user) {
         PreparedStatement ps = null;
-        String sql = "INSERT INTO users(user_id, name, login, email, date) VALUES(?, ?, ?, ?, ?);";
-        Connection connection = null;
-        try {
-        connection = SOURCE.getConnection();
-        ps = connection.prepareStatement(sql);
-            ps.setInt(1, user.getId());
-            ps.setString(2, user.getName());
-            ps.setString(3, user.getLogin());
-            ps.setString(4, user.getEmail());
-            ps.setString(5, user.getDate());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void update(User user) {
-        PreparedStatement ps = null;
-        String sql = "UPDATE users SET name = ?, login = ?, email = ?, date = ? where user_id = ?;";
+        String sql = "INSERT INTO users(login, password, role, user_name, user_sername, email) VALUES(?, ?, ?, ?, ?, ?);";
         Connection connection = null;
         try {
             connection = SOURCE.getConnection();
             ps = connection.prepareStatement(sql);
-            ps.setString(1, user.getName());
-            ps.setString(2, user.getLogin());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM uuuuг. HH:mm")));
-            ps.setInt(5, user.getId());
+            ps.setString(1, user.getLogin());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getRole());
+            ps.setString(4, user.getName());
+            ps.setString(5, user.getSername());
+            ps.setString(6, user.getEmail());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -110,15 +53,42 @@ public class DbStore implements Store<User> {
         }
     }
 
-    @Override
-    public void delete(int id) {
+    public void editUser(User user) {
+        String sql = "UPDATE users SET login = ?, password = ?, role = ?, user_name = ?, user_sername = ?, email = ? where id = ?;";
+        Connection connection = null;
         PreparedStatement ps = null;
-        String sql = "DELETE FROM users WHERE user_id = ?";
+        try {
+            connection = SOURCE.getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, user.getLogin());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getRole());
+            ps.setString(4, user.getName());
+            ps.setString(5, user.getSername());
+            ps.setString(6, user.getEmail());
+            ps.setInt(7, user.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOG.error(e.getMessage(), e);
+                }
+            }
+        }
+    }
+
+    public void deleteUser(String login) {
+        PreparedStatement ps = null;
+        String sql = "DELETE FROM users WHERE login = ?";
         Connection connection = null;
         try {
             connection = SOURCE.getConnection();
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setString(1, login);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -133,22 +103,22 @@ public class DbStore implements Store<User> {
         }
     }
 
-    @Override
-    public ArrayList<User> findAll() {
+    public ArrayList<User> findAllUsers() {
         ArrayList<User> users = new ArrayList<>();
-        ResultSet result = null;
         String sql = "SELECT * FROM users";
         Connection connection = null;
         try {
             connection = SOURCE.getConnection();
             Statement statment = connection.createStatement();
-            result = statment.executeQuery(sql);
+            ResultSet result = statment.executeQuery(sql);
             while (result.next()) {
-                users.add(new User(result.getInt("user_id"),
-                        result.getString("name"),
+                users.add(new User(result.getInt("id"),
                         result.getString("login"),
-                        result.getString("email"),
-                        result.getString("date")));
+                        result.getString("password"),
+                        result.getString("role"),
+                        result.getString("user_name"),
+                        result.getString("user_sername"),
+                        result.getString("email")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -164,24 +134,25 @@ public class DbStore implements Store<User> {
         return users;
     }
 
-    @Override
-    public User findById(int id) {
+    public User findById(String login) {
         User user = null;
         PreparedStatement ps = null;
         ResultSet result = null;
-        String sql = "SELECT * FROM users WHERE user_id = ?;";
+        String sql = "SELECT * FROM users WHERE login = ?;";
         Connection connection = null;
         try {
             connection = SOURCE.getConnection();
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setString(1, login);
             result = ps.executeQuery();
             while (result.next()) {
-                user = new User(result.getInt("user_id"),
-                        result.getString("name"),
+                user = new User(result.getInt("id"),
                         result.getString("login"),
-                        result.getString("email"),
-                        result.getString("date"));
+                        result.getString("password"),
+                        result.getString("role"),
+                        result.getString("user_name"),
+                        result.getString("user_sername"),
+                        result.getString("email"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -197,10 +168,9 @@ public class DbStore implements Store<User> {
         return user;
     }
 
-    @Override
     public boolean availableId(int id) {
         boolean available = false;
-        String sql = "SELECT * FROM users WHERE user_id = ?";
+        String sql = "SELECT * FROM users WHERE id = ?";
         Connection connection = null;
         ResultSet result = null;
         PreparedStatement ps = null;
@@ -226,7 +196,6 @@ public class DbStore implements Store<User> {
         return available;
     }
 
-    @Override
     public int getSize() {
         int count = -1;
         String sql = "SELECT count(*) FROM users as count";
@@ -252,5 +221,37 @@ public class DbStore implements Store<User> {
             }
         }
         return count;
+    }
+
+    public boolean isCredentional(String login, String password) {
+        boolean exist = false;
+        String sql = "SELECT * FROM users WHERE login = ?";
+        Connection connection = null;
+        ResultSet result = null;
+        PreparedStatement ps = null;
+        String dbPassword = null;
+        try {
+            connection = SOURCE.getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, login);
+            result = ps.executeQuery();
+            if (result.next()) {
+                dbPassword = result.getString("password");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOG.error(e.getMessage(), e);
+                }
+            }
+        }
+        if (password.equals(dbPassword)) {
+            exist = true;
+        }
+        return exist;
     }
 }
