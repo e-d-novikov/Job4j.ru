@@ -36,9 +36,7 @@ public class AdminServlet extends HttpServlet {
                 req.setAttribute("servlet", "AdminServlet");
                 req.getRequestDispatcher("/WEB-INF/views/EditUser.jsp").forward(req, resp);
             } else if (req.getParameter("action").equals("apply")) {
-                HttpSession session = req.getSession();
-                String login = (String) session.getAttribute("login");
-                User user = ValidateService.getInstance().findById(login);
+                String login = (String) req.getSession().getAttribute("login");
                 String oldLogin = req.getParameter("oldLogin");
                 String oldPassword = req.getParameter("oldPassword");
                 String newLogin = req.getParameter("login");

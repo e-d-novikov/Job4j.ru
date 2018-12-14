@@ -1,5 +1,7 @@
 package d.servlet.http;
 
+import java.util.Objects;
+
 public class User {
 
     private final Integer id;

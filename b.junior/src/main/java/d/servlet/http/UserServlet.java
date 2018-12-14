@@ -22,7 +22,6 @@ public class UserServlet extends HttpServlet {
         } else if (req.getParameter("action").equals("apply")) {
             HttpSession session = req.getSession();
             String login = (String) session.getAttribute("login");
-            User user = ValidateService.getInstance().findById(login);
             String oldLogin = req.getParameter("oldLogin");
             String oldPassword = req.getParameter("oldPassword");
             String newLogin = req.getParameter("login");
@@ -34,7 +33,6 @@ public class UserServlet extends HttpServlet {
                     req.getParameter("name"),
                     req.getParameter("sername"),
                     req.getParameter("email")));
-
             if (login.equals(oldLogin)) {
                 if (!oldLogin.equals(newLogin) || !oldPassword.equals(newPassword)) {
                     req.getRequestDispatcher("/LogoutServlet").forward(req, resp);
