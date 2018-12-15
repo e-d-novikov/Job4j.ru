@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Регистрация</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<form action="/action_page.php">
+    <div class="form-group">
+        <label for="name">Имя:</label>
+        <input type="text" name="name" id="name">
+    </div>
+    <div class="form-group">
+        <label for="surname">Фамилия:</label>
+        <input type="text" name="name" id="surname">
+    </div>
+    <div class="sex">
+        <label for="sex">Пол:</label>
+        <select name="sex" id="sex">
+            <option value="male">Муж.</option>
+            <option value="female">Жен.</option>
+        </select>
+    </div>
+    <div class="description">
+        <label for="description">Описание:</label><br>
+        <textarea name="description" id="description"></textarea>
+    </div>
+    <button type="submit" class="btn btn-default">Зарегистрировать</button>
+</form>
+<div class="container">
+    <h2>Зарегистрированные пользователи</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Пол</th>
+            <th>Описание</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Джон</td>
+            <td>Дой</td>
+            <td>Муж.</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Мэри</td>
+            <td>Мой</td>
+            <td>Жен.</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Джули</td>
+            <td>Дули</td>
+            <td>Жен.</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
