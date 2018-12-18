@@ -10,6 +10,8 @@
 </head>
 <body>
 <script>
+    $(LoadUsers());
+
     function AddRecord() {
         var name = document.forms["reg"]["name"].value;
         var surname = document.forms["reg"]["surname"].value;
@@ -27,10 +29,54 @@
         } else if (desc == "") {
             alert("Введите описание");
             return false;
+        } else {
+            CreateRecord();
+            LoadUsers();
         }
     }
+
+    function CreateRecord() {
+        $.ajax('./json', {
+            method : 'post',
+            data : JSON.stringify({
+                "name" : document.forms["reg"]["name"].value,
+                "surname" : document.forms["reg"]["surname"].value,
+                "sex" : document.forms["reg"]["sex"].value,
+                "description" : document.forms["reg"]["description"].value
+            })
+        });
+        return false;
+    }
+
+    function LoadUsers() {
+        $.ajax('./json', {
+            method: 'get',
+            complete: function (data) {
+                var result = "<tr>" +
+                    "<th>Имя</th>" +
+                    "<th>Фамилия</th>" +
+                    "<th>Пол</th>" +
+                    "<th>Описание</th>" +
+                    "</tr>";
+                var persons = JSON.parse(data.responseText);
+                for (var i = 0; i != persons.length; ++i) {
+                    result += "<tr>" +
+                        "<td>" + persons[i].name + "</td>" +
+                        "<td>" + persons[i].surname + "</td>" +
+                        "<td>" + persons[i].sex + "</td>" +
+                        "<td>" + persons[i].description + "</td>" +
+                        "</tr>";
+                }
+                var table = document.getElementById("users");
+                table.innerHTML = result;
+            }
+        });
+    }
+
+
 </script>
-<form name="reg" action="index.html">
+
+<form name="reg">
     <div class="form-group">
         <label for="name">Имя:</label>
         <input type="text" name="name" id="name">
@@ -51,39 +97,18 @@
         <label for="description">Описание:</label><br>
         <textarea name="description" id="description"></textarea>
     </div>
-    <button type="submit" class="btn btn-default" onclick="return AddRecord();">Зарегистрировать</button>
+    <button type="button" class="btn btn-default" onclick="AddRecord();">Зарегистрировать</button>
+    <button type="button" class="btn btn-default" onclick="LoadUsers();">kjfhgsd</button>
 </form>
 <div class="container">
     <h2>Зарегистрированные пользователи</h2>
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered" id="users">
         <tr>
             <th>Имя</th>
             <th>Фамилия</th>
             <th>Пол</th>
             <th>Описание</th>
         </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Джон</td>
-            <td>Дой</td>
-            <td>Муж.</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Мэри</td>
-            <td>Мой</td>
-            <td>Жен.</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Джули</td>
-            <td>Дули</td>
-            <td>Жен.</td>
-            <td></td>
-        </tr>
-        </tbody>
     </table>
 </div>
 </body>
