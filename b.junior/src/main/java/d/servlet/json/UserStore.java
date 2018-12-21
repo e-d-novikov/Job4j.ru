@@ -13,8 +13,15 @@ public class UserStore {
         return instance;
     }
 
+    private String standartCase(String string) {
+        String word = string.toLowerCase();
+        return word.substring(0, 1).toUpperCase() + word.substring(1);
+    }
+
     public void add(User user) {
-        store.put(user.getName(), user);
+        String name = standartCase(user.getName());
+        String surname = standartCase(user.getSurname());
+        store.put(user.getName(), new User(name, surname, user.getSex(), user.getCountry(), user.getRegion(), user.getCity(), user.getDescription()));
     }
 
     public ArrayList<User> getAll() {

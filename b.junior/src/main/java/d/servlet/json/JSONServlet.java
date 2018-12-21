@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class JSONServlet extends HttpServlet {
 
@@ -18,7 +17,6 @@ public class JSONServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         JSONArray array = new JSONArray(UserStore.getInstance().getAll());
-        System.out.println(array.toString());
         resp.getWriter().write(array.toString());
     }
 

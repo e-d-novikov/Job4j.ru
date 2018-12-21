@@ -34,4 +34,13 @@
         <servlet-name>JSONServlet</servlet-name>
         <url-pattern>/json</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LocationServlet</servlet-name>
+        <servlet-class>d.servlet.json.LocationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LocationServlet</servlet-name>
+        <url-pattern>/location</url-pattern>
+    </servlet-mapping>
 </web-app>

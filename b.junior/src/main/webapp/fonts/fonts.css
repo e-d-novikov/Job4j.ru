@@ -1,0 +1,210 @@
+@font-face {
+    font-family: 'Nautilus';
+    src: url('nautilus/Nautilus.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ExcentraPro';
+    src: url('excentrapro/ExcentraPro-Light.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ExcentraPro';
+    src: url('excentrapro/ExcentraPro-LightItalic.ttf') format('opentype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Freeride';
+    src: url('freeride/Freeride.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Play';
+    src: url('play/Play-Regular.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Play';
+    src: url('play/Play-Bold.ttf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SkemaPro';
+    src: url('skemaprotitle/SkemaProTitle-Medium.ttf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SkemaPro';
+    src: url('skemaprotitle/SkemaProTitle-MediumItalic.ttf') format('opentype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Steamy';
+    src: url('steamy/Steamy.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Web Serveroff';
+    src: url('webserveroff/Web_Serveroff.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Web Serveroff';
+    src: url('webserveroff/Web_Serveroff-Italic.otf') format('opentype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Xolonium';
+    src: url('xolonium/Xolonium-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Xolonium';
+    src: url('xolonium/Xolonium-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+.nautilus {
+    font-family: Nautilus, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.excentrapro {
+    font-family: ExcentraPro, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.excentrapro-italic {
+    font-family: ExcentraPro, sans-serif;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.freeride {
+    font-family: Freeride, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.play {
+    font-family: Play, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.play-bold {
+    font-family: Play, sans-serif;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.skemapro {
+    font-family: SkemaPro, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.skemapro-italic {
+    font-family: SkemaPro, sans-serif;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.steamy {
+    font-family: Steamy, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.webserveroff {
+    font-family: "Web Serveroff", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.webserveroff-italic {
+    font-family: "Web Serveroff", sans-serif;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.xolonium {
+    font-family: Xolonium, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.xolonium-bold {
+    font-family: Xolonium, sans-serif;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.playfair-display {
+    font-family: 'Playfair Display', serif;
+    /*font-weight: bold;
+    font-style: normal;*/
+}
+
+.neucha {
+    font-family: 'Neucha', cursive;
+    /*font-weight: bold;
+    font-style: normal;*/
+}
+
+.old-standard-tt {
+    font-family: 'Old Standard TT', serif;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.gabriela {
+    font-family: 'Gabriela', serif;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.pattaya {
+    font-family: 'Pattaya', sans-serif;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.vollkorn-sc {
+    font-family: 'Vollkorn SC', serif;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.cormorant-unicase {
+    font-family: 'Cormorant Unicase', serif;
+    font-weight: bold;
+    font-style: normal;
+}
