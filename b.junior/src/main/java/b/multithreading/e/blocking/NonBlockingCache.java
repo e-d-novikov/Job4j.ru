@@ -16,12 +16,11 @@ public class NonBlockingCache {
 
     public void update(Base model) {
         cache.computeIfPresent(model.getId(), (x, y) -> {
-            if (y.getVersion() == y.getVersion()) {
-                model.setVersion(model.getVersion() + 1);
-                return model;
-            } else {
+            if (y.getVersion() != y.getVersion()) {
                 throw new OptimisticException();
             }
+            model.setVersion(model.getVersion() + 1);
+            return model;
         });
     }
 
