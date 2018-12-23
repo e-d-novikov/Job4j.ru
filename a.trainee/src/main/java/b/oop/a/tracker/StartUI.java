@@ -7,9 +7,9 @@ package b.oop.a.tracker;
  */
 public class StartUI {
     /**
-     * Array for storing menu items.
+     * Working program
      */
-    private int[] ranges = new int[]{1, 2, 3, 4, 5, 6, 7};
+    private boolean working = true;
     /**
      * Input.
      */
@@ -32,11 +32,15 @@ public class StartUI {
      */
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
-        menu.fillAction();
+        menu.fillAction(this);
         do {
             menu.show();
-            menu.select(input.ask("Menu item:", ranges));
-        } while (!"y".equals(this.input.ask("Finish work with the editor? y/n")));
+            menu.select(input.ask("Menu item:", menu.getNumbersAction()));
+        } while (this.working);
+    }
+
+    public void stop() {
+        this.working = false;
     }
     /**
      * Method launches the application.

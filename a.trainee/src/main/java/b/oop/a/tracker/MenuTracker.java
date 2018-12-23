@@ -35,14 +35,22 @@ public class MenuTracker {
     /**
      * Menu items.
      */
-    public void fillAction() {
+    public void fillAction(StartUI ui) {
         actions.add(new AddItem(1, "Add application"));
         actions.add(new EditItem(2, "Edit application"));
         actions.add(new DeleteItem(3, "Remove application"));
         actions.add(new GetAll(4, "Current applications"));
         actions.add(new FindByID(5, "Search by ID"));
         actions.add(new FindByName(6, "Search by name"));
-        actions.add(new Exit(7, "Exit"));
+        actions.add(new Exit(7, "Exit", ui));
+    }
+
+    public int[] getNumbersAction() {
+        int[] result = new int[actions.size()];
+        for (int i = 0; i < actions.size(); i++) {
+            result[i] = i + 1;
+        }
+        return result;
     }
     /**
      * Method for selecting a menu item.
@@ -230,12 +238,18 @@ public class MenuTracker {
      */
     public class Exit extends BaseAction {
         /**
+         * Start UI
+         */
+        private StartUI ui;
+        /**
          * Menu item for exit.
          * @param key - menu item number.
          * @param name - menu item name.
+         *@param ui - start ui
          */
-        public Exit(int key, String name) {
+        public Exit(int key, String name, StartUI ui) {
             super(key, name);
+            this.ui = ui;
         }
         /**
          * Method to exit the application.
@@ -243,7 +257,7 @@ public class MenuTracker {
          * @param tracker - tracker.
          */
         public void execute(Input input, Tracker tracker) {
-
+            this.ui.stop();
         }
     }
 }

@@ -2,9 +2,16 @@ package b.oop.a.tracker;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Properties;
+
 /**
  * Class Tracker keeps applications, and has methods for editing.
  * @author Egor Novikov (e.novikov@yahoo.com)
@@ -13,15 +20,35 @@ import java.time.format.DateTimeFormatter;
  */
 public class Tracker implements AutoCloseable {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Tracker.class);
-    private static String url = "jdbc:postgresql://localhost:5432/items";
-    private static String username = "postgres";
-    private static String password = "password";
     private static Connection connection = null;
+    private String create = null;
 
     public Tracker() {
+        try {
+            connection = getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         createTable();
     }
+
+    private Connection getConnection() throws SQLException, IOException, URISyntaxException {
+        Properties props = new Properties();
+        File file = new File("a.trainee/src/main/java/b/oop/a/tracker/config/database.properties");
+        try (FileInputStream fin = new FileInputStream(file)) {
+            props.load(fin);
+        }
+        String url = props.getProperty("url");
+        String username = props.getProperty("username");
+        String password = props.getProperty("password");
+        create = props.getProperty("create");
+        return DriverManager.getConnection(url, username, password);
+    }
+
     /**
      * Method adds the application in the repository.
      * @param name - name;
@@ -31,7 +58,6 @@ public class Tracker implements AutoCloseable {
         PreparedStatement ps = null;
         String sql = "INSERT INTO items(name, description, create_date) VALUES(?, ?, ?);";
         try {
-            connection = DriverManager.getConnection(url, username, password);
             ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, description);
@@ -39,14 +65,6 @@ public class Tracker implements AutoCloseable {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }
         }
     }
     /**
@@ -57,7 +75,6 @@ public class Tracker implements AutoCloseable {
         PreparedStatement ps = null;
         String sql = "UPDATE items SET name = ?, description = ?, create_date = ? where id = ?;";
         try {
-            connection = DriverManager.getConnection(url, username, password);
             ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, description);
@@ -66,14 +83,6 @@ public class Tracker implements AutoCloseable {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }
         }
     }
     /**
@@ -84,20 +93,11 @@ public class Tracker implements AutoCloseable {
         PreparedStatement ps = null;
         String sql = "DELETE FROM items WHERE id = ?;";
         try {
-            connection = DriverManager.getConnection(url, username, password);
             ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }
         }
     }
     /**
@@ -110,7 +110,6 @@ public class Tracker implements AutoCloseable {
         ResultSet result = null;
         String sql = "SELECT * FROM items WHERE id = ?;";
         try {
-            connection = DriverManager.getConnection(url, username, password);
             ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             result = ps.executeQuery();
@@ -119,14 +118,6 @@ public class Tracker implements AutoCloseable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }
         }
     }
     /**
@@ -138,7 +129,6 @@ public class Tracker implements AutoCloseable {
         ResultSet result = null;
         String sql = "SELECT * FROM items WHERE name = ?";
         try {
-            connection = DriverManager.getConnection(url, username, password);
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             result = ps.executeQuery();
@@ -147,14 +137,6 @@ public class Tracker implements AutoCloseable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }
         }
     }
     /**
@@ -165,7 +147,6 @@ public class Tracker implements AutoCloseable {
         ResultSet result = null;
         String sql = "SELECT * FROM items";
         try {
-            connection = DriverManager.getConnection(url, username, password);
             PreparedStatement ps = connection.prepareStatement(sql);
             result = ps.executeQuery();
             while (result.next()) {
@@ -173,14 +154,6 @@ public class Tracker implements AutoCloseable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }
         }
     }
     /**
@@ -188,26 +161,12 @@ public class Tracker implements AutoCloseable {
      * @return - true, if there are applications, else false.
      */
 
-    public static void createTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS items("
-                + "id serial primary key,"
-                + "name character varying (200),"
-                + "description character varying (2000),"
-                + "create_date character varying (100));";
+    private void createTable() {
         try {
-            connection = DriverManager.getConnection(url, username, password);
             Statement statment = connection.createStatement();
-            statment.execute(sql);
+            statment.execute(create);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }
         }
     }
 
@@ -216,7 +175,6 @@ public class Tracker implements AutoCloseable {
         ResultSet rs = null;
         String sql = "SELECT count(*) FROM items as count";
         try {
-            connection = DriverManager.getConnection(url, username, password);
             PreparedStatement ps = connection.prepareStatement(sql);
             rs = ps.executeQuery();
             int count = 0;
@@ -228,20 +186,12 @@ public class Tracker implements AutoCloseable {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException e) {
-                    LOG.error(e.getMessage(), e);
-                }
-            }
         }
         return result;
     }
 
     @Override
     public void close() throws Exception {
-
+        connection.close();
     }
 }
