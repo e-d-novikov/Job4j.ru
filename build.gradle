@@ -25,6 +25,8 @@ subprojects {
         compile group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.13'
         compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.13'
         compile group: 'org.json', name: 'json', version: '20180813'
+        compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+        compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
     }
 
     javadoc {
