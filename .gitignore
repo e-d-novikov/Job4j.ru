@@ -40,3 +40,6 @@ setting.gradle
 # IDEA
 .idea
 *.iml
+
+#Maven
+target

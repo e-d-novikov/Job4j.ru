@@ -9,6 +9,6 @@ after_success:
 notifications:
   email:
     recipients:
-    - e.novikov@yahoo.com
+    - e.d.novikov1990@yandex.ru
     on_success: never # default: change
     on_failure: always # default: always
