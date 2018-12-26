@@ -55,10 +55,8 @@ public class Tracker implements AutoCloseable {
      * @param description - description.
      */
     public void add(String name, String description) {
-        PreparedStatement ps = null;
         String sql = "INSERT INTO items(name, description, create_date) VALUES(?, ?, ?);";
-        try {
-            ps = connection.prepareStatement(sql);
+        try (PreparedStatement ps  = connection.prepareStatement(sql)) {
             ps.setString(1, name);
             ps.setString(2, description);
             ps.setString(3, LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM uuuuг. HH:mm")));
@@ -72,10 +70,8 @@ public class Tracker implements AutoCloseable {
      * @param id - ID.
      */
     public void replace(int id, String name, String description) {
-        PreparedStatement ps = null;
         String sql = "UPDATE items SET name = ?, description = ?, create_date = ? where id = ?;";
-        try {
-            ps = connection.prepareStatement(sql);
+        try (PreparedStatement ps  = connection.prepareStatement(sql)) {
             ps.setString(1, name);
             ps.setString(2, description);
             ps.setString(3, LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM uuuuг. HH:mm")));
@@ -90,10 +86,8 @@ public class Tracker implements AutoCloseable {
      * @param id - ID.
      */
     public void delete(int id) {
-        PreparedStatement ps = null;
         String sql = "DELETE FROM items WHERE id = ?;";
-        try {
-            ps = connection.prepareStatement(sql);
+        try (PreparedStatement ps  = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -106,13 +100,10 @@ public class Tracker implements AutoCloseable {
      * @return - new unique key.
      */
     public void findById(int id) {
-        PreparedStatement ps = null;
-        ResultSet result = null;
         String sql = "SELECT * FROM items WHERE id = ?;";
-        try {
-            ps = connection.prepareStatement(sql);
+        try (PreparedStatement ps  = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
-            result = ps.executeQuery();
+            ResultSet result = ps.executeQuery();
             while (result.next()) {
                 System.out.println(String.format("%d %s %s %s", result.getInt("id"), result.getString("name"), result.getString("description"), result.getString("create_date")));
             }
@@ -126,12 +117,10 @@ public class Tracker implements AutoCloseable {
      * @return - list of applications.
      */
     public void findByName(String name) {
-        ResultSet result = null;
         String sql = "SELECT * FROM items WHERE name = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+        try (PreparedStatement ps  = connection.prepareStatement(sql)) {
             ps.setString(1, name);
-            result = ps.executeQuery();
+            ResultSet result = ps.executeQuery();
             while (result.next()) {
                 System.out.println(String.format("%d %s %s %s", result.getInt("id"), result.getString("name"), result.getString("description"), result.getString("create_date")));
             }
@@ -144,11 +133,9 @@ public class Tracker implements AutoCloseable {
      * @return lost of application.
      */
     public void getAll() {
-        ResultSet result = null;
         String sql = "SELECT * FROM items";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            result = ps.executeQuery();
+        try (PreparedStatement ps  = connection.prepareStatement(sql)) {
+            ResultSet result = ps.executeQuery();
             while (result.next()) {
                 System.out.println(String.format("%d %s %s %s", result.getInt("id"), result.getString("name"), result.getString("description"), result.getString("create_date")));
             }
@@ -162,9 +149,8 @@ public class Tracker implements AutoCloseable {
      */
 
     private void createTable() {
-        try {
-            Statement statment = connection.createStatement();
-            statment.execute(create);
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(create);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -172,14 +158,12 @@ public class Tracker implements AutoCloseable {
 
     public boolean isEmpty() {
         boolean result = false;
-        ResultSet rs = null;
+        int count = 0;
         String sql = "SELECT count(*) FROM items as count";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            rs = ps.executeQuery();
-            int count = 0;
-            while (rs.next()) {
-                count = rs.getInt("count");
+        try (PreparedStatement ps  = connection.prepareStatement(sql)) {
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt("count");
             }
             if (count > 0) {
                 result = true;
