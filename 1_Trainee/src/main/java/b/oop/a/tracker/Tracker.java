@@ -1,15 +1,16 @@
 package b.oop.a.tracker;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
+import java.nio.file.Path;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -20,46 +21,38 @@ import java.util.Properties;
  */
 public class Tracker implements AutoCloseable {
 
-    private static Connection connection = null;
-    private String create = null;
+    private final Connection connection;
 
-    public Tracker() {
-        try {
-            connection = getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        createTable();
+    public Tracker() throws SQLException, IOException, URISyntaxException {
+        this.connection = getConnection();
+    }
+
+    public Tracker(Connection connection) {
+        this.connection = connection;
     }
 
     private Connection getConnection() throws SQLException, IOException, URISyntaxException {
         Properties props = new Properties();
-        File file = new File("a.trainee/src/main/java/b/oop/a/tracker/config/database.properties");
+        File file = new File(System.getProperty("user.dir") + "/1_Trainee/src/main/java/b/oop/a/tracker/config/database.properties");
         try (FileInputStream fin = new FileInputStream(file)) {
             props.load(fin);
         }
         String url = props.getProperty("url");
         String username = props.getProperty("username");
         String password = props.getProperty("password");
-        create = props.getProperty("create");
         return DriverManager.getConnection(url, username, password);
     }
 
     /**
      * Method adds the application in the repository.
-     * @param name - name;
-     * @param description - description.
+     * @param item - item;
      */
-    public void add(String name, String description) {
+    public void add(Item item) {
         String sql = "INSERT INTO items(name, description, create_date) VALUES(?, ?, ?);";
         try (PreparedStatement ps  = connection.prepareStatement(sql)) {
-            ps.setString(1, name);
-            ps.setString(2, description);
-            ps.setString(3, LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM uuuuг. HH:mm")));
+            ps.setString(1, item.getName());
+            ps.setString(2, item.getDesc());
+            ps.setString(3, item.getDate());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,15 +60,15 @@ public class Tracker implements AutoCloseable {
     }
     /**
      * Method modifies the application in the repository.
-     * @param id - ID.
+     * @param item - item.
      */
-    public void replace(int id, String name, String description) {
+    public void replace(Item item) {
         String sql = "UPDATE items SET name = ?, description = ?, create_date = ? where id = ?;";
         try (PreparedStatement ps  = connection.prepareStatement(sql)) {
-            ps.setString(1, name);
-            ps.setString(2, description);
-            ps.setString(3, LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM uuuuг. HH:mm")));
-            ps.setInt(4, id);
+            ps.setString(1, item.getName());
+            ps.setString(2, item.getDesc());
+            ps.setString(3, item.getDate());
+            ps.setInt(4, item.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,49 +92,64 @@ public class Tracker implements AutoCloseable {
      * @param id - ID.
      * @return - new unique key.
      */
-    public void findById(int id) {
+    public Item findById(int id) {
         String sql = "SELECT * FROM items WHERE id = ?;";
+        Item item = null;
         try (PreparedStatement ps  = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet result = ps.executeQuery();
             while (result.next()) {
-                System.out.println(String.format("%d %s %s %s", result.getInt("id"), result.getString("name"), result.getString("description"), result.getString("create_date")));
+                item = new Item(result.getInt("id"),
+                        result.getString("name"),
+                        result.getString("description"),
+                        result.getString("create_date"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return item;
     }
     /**
      * Method returns a list of orders by name.
      * @param name - name of application.
      * @return - list of applications.
      */
-    public void findByName(String name) {
+    public ArrayList<Item> findByName(String name) {
         String sql = "SELECT * FROM items WHERE name = ?";
+        ArrayList<Item> items = new ArrayList<>();
         try (PreparedStatement ps  = connection.prepareStatement(sql)) {
             ps.setString(1, name);
             ResultSet result = ps.executeQuery();
             while (result.next()) {
-                System.out.println(String.format("%d %s %s %s", result.getInt("id"), result.getString("name"), result.getString("description"), result.getString("create_date")));
+                items.add(new Item(result.getInt("id"),
+                        result.getString("name"),
+                        result.getString("description"),
+                        result.getString("create_date")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return items;
     }
     /**
      * Method receives a list of all applications.
      * @return lost of application.
      */
-    public void getAll() {
+    public ArrayList<Item> getAll() {
+        ArrayList<Item> items = new ArrayList<>();
         String sql = "SELECT * FROM items";
         try (PreparedStatement ps  = connection.prepareStatement(sql)) {
             ResultSet result = ps.executeQuery();
             while (result.next()) {
-                System.out.println(String.format("%d %s %s %s", result.getInt("id"), result.getString("name"), result.getString("description"), result.getString("create_date")));
+                items.add(new Item(result.getInt("id"),
+                        result.getString("name"),
+                        result.getString("description"),
+                        result.getString("create_date")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return items;
     }
     /**
      * The method is responsible for the availability of applications.
@@ -149,15 +157,20 @@ public class Tracker implements AutoCloseable {
      */
 
     private void createTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS items("
+                + "id serial primary key, "
+                + "name character varying (200), "
+                + "description character varying (2000), "
+                + "create_date character varying (100));";
         try (Statement statement = connection.createStatement()) {
-            statement.execute(create);
+            statement.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public boolean isEmpty() {
-        boolean result = false;
+        boolean result = true;
         int count = 0;
         String sql = "SELECT count(*) FROM items as count";
         try (PreparedStatement ps  = connection.prepareStatement(sql)) {
@@ -166,7 +179,7 @@ public class Tracker implements AutoCloseable {
                 count = resultSet.getInt("count");
             }
             if (count > 0) {
-                result = true;
+                result = false;
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -91,7 +91,7 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             String name = input.ask("Please enter a name:");
             String description = input.ask("Please enter the description of the application:");
-            tracker.add(name, description);
+            tracker.add(new Item(name, description));
             System.out.println("Application created");
         }
     }
@@ -118,7 +118,7 @@ public class MenuTracker {
                 String id = input.ask("Enter the application ID:");
                 String name = input.ask("Enter the name of the application:");
                 String desc = input.ask("Please enter the description of the application:");
-                tracker.replace(Integer.parseInt(id), name, desc);
+                tracker.replace(new Item(Integer.parseInt(id), name, desc));
                 System.out.println("Application updated");
             } else {
                 System.out.println("Currently there are no applications available");
@@ -172,7 +172,9 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             if (tracker.isEmpty()) {
                 System.out.println("Current applications:");
-                tracker.getAll();
+                for (Item item : tracker.getAll()) {
+                    System.out.println(item.toString());
+                }
             } else {
                 System.out.println("Currently there are no applications available");
             }
@@ -200,7 +202,7 @@ public class MenuTracker {
             if (tracker.isEmpty()) {
                 System.out.println("Search by ID");
                 String id = input.ask("Enter the application ID: ");
-                tracker.findById(Integer.parseInt(id));
+                System.out.println(tracker.findById(Integer.parseInt(id)).toString());
             } else {
                 System.out.println("Currently there are no applications available");
             }
@@ -227,7 +229,9 @@ public class MenuTracker {
             if (tracker.isEmpty()) {
                 System.out.println("Search by name");
                 String name = input.ask("Enter the application name: ");
-                tracker.findByName(name);
+                for (Item item : tracker.findByName(name)) {
+                    System.out.println(item.toString());
+                }
             } else {
                 System.out.println("Currently there are no applications available");
             }
