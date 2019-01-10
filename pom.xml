@@ -19,6 +19,7 @@
         <module>3_Middle</module>
         <module>4_Fullstack</module>
         <module>5_Addition</module>
+        <module>6_Parser_vacancy</module>
     </modules>
 
     <profiles>
@@ -167,7 +168,28 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>2.11.1</version>
-        </dependency>    </dependencies>
+        </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

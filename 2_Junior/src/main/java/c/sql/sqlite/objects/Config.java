@@ -1,6 +1,7 @@
 package c.sql.sqlite.objects;
 
 public class Config {
+
     private String nameDataBaseFile;
 
     public Config(String nameDataBaseFile) {
