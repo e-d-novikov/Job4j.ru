@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <title>Оплата</title>
+    <script>
+
+        var paramValue;
+
+        function OnLoad() {
+            paramValue = window.location.href.split("?")[1].split("=")[1];
+            document.getElementById('place').innerHTML = paramValue;
+        }
+
+        function CreateRecord() {
+            paramValue = window.location.href.split("?")[1].split("=")[1];
+            var number = Number(paramValue) - 1;
+            var request = {'action' : 'reserve', 'place_id' : paramValue};
+            $.ajax('./cinema', {
+                method: 'get',
+                complete: function (data) {
+                    var places = JSON.parse(data.responseText);
+                    var place = 'Ряд №' + places[number].row + ' Место №' + places[number].place + ' Цена: ' + places[number].price + 'руб.';
+                    document.getElementById('place').innerHTML = place;
+                }
+            })
+        }
+
+        function Buy() {
+
+            var name = document.forms["person"]["username"].value;
+            var phone = document.forms["person"]["phone"].value;
+
+            $.ajax('./cinema', {
+                method: 'post',
+                data: {
+                    "place_id" : paramValue,
+                    "name": name,
+                    "phone": phone
+                }
+            });
+            Button();
+        }
+
+        function Button() {
+            var redirect_url = 'http://localhost:8080/2_Junior_war_exploded/hall.html';
+            window.location.href = redirect_url;
+        }
+
+        CreateRecord();
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row pt-3">
+        <h3 id="place">
+
+        </h3>
+    </div>
+    <div class="row">
+        <form name="person" id="person">
+            <div class="form-group">
+                <label for="username">ФИО</label>
+                <input type="text" class="form-control" id="username" placeholder="ФИО">
+            </div>
+            <div class="form-group">
+                <label for="phone">Номер телефона</label>
+                <input type="text" class="form-control" id="phone" placeholder="Номер телефона">
+            </div>
+            <button type="button" class="btn btn-success" onclick="Buy()">Оплатить</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

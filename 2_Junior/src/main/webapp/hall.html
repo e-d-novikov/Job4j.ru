@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Зал №1</title>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script>
+    function LoadPlaces() {
+        $.ajax('./cinema', {
+            method: 'get',
+            complete: function (data) {
+
+                var places = JSON.parse(data.responseText);
+                var tbody = document.createElement("TBODY");
+
+                var first_row = document.createElement("TR");
+                var first_row_th = document.createElement("TH");
+                first_row_th.innerHTML = '№1';
+                first_row.appendChild(first_row_th);
+
+                var first_row_first_place = document.createElement("TD");
+                var account_id_first_row_first_place = places[0].account.id;
+                var input_first_row_first_place = '<input type="radio" name="place" value="' + places[0].id + '">' + places[0].price + 'руб.';
+                var disable_first_row_first_place = '<input type="radio" name="place" value="' + places[0].id + '" disabled>' + places[0].price + 'руб.';
+                if (account_id_first_row_first_place == 1) {
+                    first_row_first_place.innerHTML = input_first_row_first_place;
+                } else {
+                    first_row_first_place.innerHTML = disable_first_row_first_place;
+                }
+                first_row.appendChild(first_row_first_place);
+
+                var first_row_second_place = document.createElement("TD");
+                var account_id_first_row_second_place = places[1].account.id;
+                var input_first_row_second_place = '<input type="radio" name="place" value="' + places[1].id + '">' + places[1].price + 'руб.';
+                var disable_first_row_second_place = '<input type="radio" name="place" value="' + places[1].id + '" disabled>' + places[1].price + 'руб.';
+                if (account_id_first_row_second_place == 1) {
+                    first_row_second_place.innerHTML = input_first_row_second_place;
+                } else {
+                    first_row_second_place.innerHTML = disable_first_row_second_place;
+                }
+                first_row.appendChild(first_row_second_place);
+
+                var first_row_third_place = document.createElement("TD");
+                var account_id_first_row_third_place = places[2].account.id;
+                var input_first_row_third_place = '<input type="radio" name="place" value="' + places[2].id + '">' + places[2].price + 'руб.';
+                var disable_first_row_third_place = '<input type="radio" name="place" value="' + places[2].id + '" disabled>' + places[2].price + 'руб.';
+                if (account_id_first_row_third_place == 1) {
+                    first_row_third_place.innerHTML = input_first_row_third_place;
+                } else {
+                    first_row_third_place.innerHTML = disable_first_row_third_place;
+                }
+                first_row.appendChild(first_row_third_place);
+
+
+
+                var second_row = document.createElement("TR");
+                var second_row_th = document.createElement("TH");
+                second_row_th.innerHTML = '№2';
+                second_row.appendChild(second_row_th);
+
+                var second_row_first_place = document.createElement("TD");
+                var account_id_second_row_first_place = places[3].account.id;
+                var input_second_row_first_place = '<input type="radio" name="place" value="' + places[3].id + '">' + places[3].price + 'руб.';
+                var disable_second_row_first_place = '<input type="radio" name="place" value="' + places[3].id + '" disabled>' + places[3].price + 'руб.';
+                if (account_id_second_row_first_place == 1) {
+                    second_row_first_place.innerHTML = input_second_row_first_place;
+                } else {
+                    second_row_first_place.innerHTML = disable_second_row_first_place;
+                }
+                second_row.appendChild(second_row_first_place);
+
+                var second_row_second_place = document.createElement("TD");
+                var account_id_second_row_second_place = places[4].account.id;
+                var input_second_row_second_place = '<input type="radio" name="place" value="' + places[4].id + '">' + places[4].price + 'руб.';
+                var disable_second_row_second_place = '<input type="radio" name="place" value="' + places[4].id + '" disabled>' + places[4].price + 'руб.';
+                if (account_id_second_row_second_place == 1) {
+                    second_row_second_place.innerHTML = input_second_row_second_place;
+                } else {
+                    second_row_second_place.innerHTML = disable_second_row_second_place;
+                }
+                second_row.appendChild(second_row_second_place);
+
+                var second_row_third_place = document.createElement("TD");
+                var account_id_second_row_third_place = places[5].account.id;
+                var input_second_row_third_place = '<input type="radio" name="place" value="' + places[5].id + '">' + places[5].price + 'руб.';
+                var disable_second_row_third_place = '<input type="radio" name="place" value="' + places[5].id + '" disabled>' + places[5].price + 'руб.';
+                if (account_id_second_row_third_place == 1) {
+                    second_row_third_place.innerHTML = input_second_row_third_place;
+                } else {
+                    second_row_third_place.innerHTML = disable_second_row_third_place;
+                }
+                second_row.appendChild(second_row_third_place);
+
+
+
+                var third_row = document.createElement("TR");
+                var third_row_th = document.createElement("TH");
+                third_row_th.innerHTML = '№3';
+                third_row.appendChild(third_row_th);
+
+                var third_row_first_place = document.createElement("TD");
+                var account_id_third_row_first_place = places[6].account.id;
+                var input_third_row_first_place = '<input type="radio" name="place" value="' + places[6].id + '">' + places[6].price + 'руб.';
+                var disable_third_row_first_place = '<input type="radio" name="place" value="' + places[6].id + '" disabled>' + places[6].price + 'руб.';
+                if (account_id_third_row_first_place == 1) {
+                    third_row_first_place.innerHTML = input_third_row_first_place;
+                } else {
+                    third_row_first_place.innerHTML = disable_third_row_first_place;
+                }
+                third_row.appendChild(third_row_first_place);
+
+                var third_row_second_place = document.createElement("TD");
+                var account_id_third_row_second_place = places[7].account.id;
+                var input_third_row_second_place = '<input type="radio" name="place" value="' + places[7].id + '">' + places[7].price + 'руб.';
+                var disable_third_row_second_place = '<input type="radio" name="place" value="' + places[7].id + '" disabled>' + places[7].price + 'руб.';
+                if (account_id_third_row_second_place == 1) {
+                    third_row_second_place.innerHTML = input_third_row_second_place;
+                } else {
+                    third_row_second_place.innerHTML = disable_third_row_second_place;
+                }
+                third_row.appendChild(third_row_second_place);
+
+                var third_row_third_place = document.createElement("TD");
+                var account_id_third_row_third_place = places[8].account.id;
+                var input_third_row_third_place = '<input type="radio" name="place" value="' + places[8].id + '">' + places[8].price + 'руб.';
+                var disable_third_row_third_place = '<input type="radio" name="place" value="' + places[8].id + '" disabled>' + places[8].price + 'руб.';
+                if (account_id_third_row_third_place == 1) {
+                    third_row_third_place.innerHTML = input_third_row_third_place;
+                } else {
+                    third_row_third_place.innerHTML = disable_third_row_third_place;
+                }
+                third_row.appendChild(third_row_third_place);
+
+                tbody.appendChild(first_row);
+                tbody.appendChild(second_row);
+                tbody.appendChild(third_row);
+
+                var old_tbody = document.getElementById('hall_places').getElementsByTagName("TBODY")[0];
+                document.getElementById('hall_places').replaceChild(tbody, old_tbody);
+            }
+        });
+    }
+    LoadPlaces();
+    setTimeout(LoadPlaces, 1000);
+</script>
+
+<div class="container">
+        <div class="row pt-3">
+            <h4>
+                Бронирование места на сеанс
+            </h4>
+
+            <table class="table table-bordered" id="hall_places">
+                <thead>
+                <tr>
+                    <th style="width: 120px;">Ряд / Место</th>
+                    <th>№1</th>
+                    <th>№2</th>
+                    <th>№3</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    <div class="row float-right">
+        <button id="buy" onclick="Button()">Оплатить</button>
+    </div>
+</div>
+
+<script>
+    function Button() {
+        var placeID = document.querySelector('input[name="place"]:checked').value;
+        var redirect_url = 'http://localhost:8080/2_Junior_war_exploded/payment.html?place=' + placeID;
+        window.location.href = redirect_url;
+    }
+</script>
+</body>
+</html>
