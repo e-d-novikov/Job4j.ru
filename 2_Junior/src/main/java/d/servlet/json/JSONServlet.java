@@ -2,7 +2,6 @@ package d.servlet.json;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

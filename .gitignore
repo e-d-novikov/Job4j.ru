@@ -43,3 +43,4 @@ setting.gradle
 
 #Maven
 target
+classes
