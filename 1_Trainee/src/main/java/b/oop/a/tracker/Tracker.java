@@ -1,18 +1,14 @@
 package b.oop.a.tracker;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URLDecoder;
-import java.nio.file.Path;
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Properties;
-
 /**
  * Class Tracker keeps applications, and has methods for editing.
  * @author Egor Novikov (e.novikov@yahoo.com)
@@ -22,6 +18,7 @@ import java.util.Properties;
 public class Tracker implements AutoCloseable {
 
     private final Connection connection;
+    private static final Logger LOG = LoggerFactory.getLogger(Tracker.class);
 
     public Tracker() throws SQLException, IOException, URISyntaxException {
         this.connection = getConnection();
@@ -31,11 +28,10 @@ public class Tracker implements AutoCloseable {
         this.connection = connection;
     }
 
-    private Connection getConnection() throws SQLException, IOException, URISyntaxException {
+    private Connection getConnection() throws SQLException, IOException {
         Properties props = new Properties();
-        File file = new File(System.getProperty("user.dir") + "/1_Trainee/src/main/java/b/oop/a/tracker/config/database.properties");
-        try (FileInputStream fin = new FileInputStream(file)) {
-            props.load(fin);
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("database.properties")) {
+            props.load(stream);
         }
         String url = props.getProperty("url");
         String username = props.getProperty("username");
@@ -55,7 +51,7 @@ public class Tracker implements AutoCloseable {
             ps.setString(3, item.getDate());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
     }
     /**
@@ -71,7 +67,7 @@ public class Tracker implements AutoCloseable {
             ps.setInt(4, item.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
     }
     /**
@@ -84,7 +80,7 @@ public class Tracker implements AutoCloseable {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
     }
     /**
@@ -105,7 +101,7 @@ public class Tracker implements AutoCloseable {
                         result.getString("create_date"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
         return item;
     }
@@ -127,7 +123,7 @@ public class Tracker implements AutoCloseable {
                         result.getString("create_date")));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
         return items;
     }
@@ -147,7 +143,7 @@ public class Tracker implements AutoCloseable {
                         result.getString("create_date")));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
         return items;
     }
@@ -155,7 +151,6 @@ public class Tracker implements AutoCloseable {
      * The method is responsible for the availability of applications.
      * @return - true, if there are applications, else false.
      */
-
     private void createTable() {
         String sql = "CREATE TABLE IF NOT EXISTS items("
                 + "id serial primary key, "
@@ -165,7 +160,7 @@ public class Tracker implements AutoCloseable {
         try (Statement statement = connection.createStatement()) {
             statement.execute(sql);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
     }
 
@@ -182,7 +177,7 @@ public class Tracker implements AutoCloseable {
                 result = false;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
         return result;
     }
