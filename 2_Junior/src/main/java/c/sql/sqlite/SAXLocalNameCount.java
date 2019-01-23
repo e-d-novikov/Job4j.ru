@@ -2,13 +2,11 @@ package c.sql.sqlite;
 
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
-
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.PrintStream;
 import java.math.BigInteger;
-import java.util.Enumeration;
 import java.util.Hashtable;
 
 public class SAXLocalNameCount extends DefaultHandler {
@@ -32,9 +30,7 @@ public class SAXLocalNameCount extends DefaultHandler {
         System.out.println(result);
     }
 
-
-
-    public void startDocument() throws SAXException {
+    public void startDocument() {
         tags = new Hashtable();
     }
 
@@ -48,16 +44,6 @@ public class SAXLocalNameCount extends DefaultHandler {
             count++;
             tags.put(key, new Integer(count));
         }
-    }
-
-    public void endDocument() throws SAXException {
-        /*Enumeration e = tags.keys();
-        while (e.hasMoreElements()) {
-            String tag = (String)e.nextElement();
-            int count = ((Integer)tags.get(tag)).intValue();
-            System.out.println("Local Name \"" + tag + "\" occurs "
-                    + count + " times");
-        }*/
     }
 
     private static String convertToFileURL(String filename) {

@@ -1,7 +1,6 @@
 package c.sql.sqlite;
 
 import c.sql.sqlite.objects.User;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;

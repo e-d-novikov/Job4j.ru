@@ -2,7 +2,6 @@ package c.sql.sqlite;
 
 import c.sql.sqlite.objects.Config;
 import c.sql.sqlite.objects.User;
-
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 import java.io.File;

@@ -3,14 +3,11 @@ package c.sql.sqlite;
 import c.sql.sqlite.objects.Config;
 import c.sql.sqlite.objects.Field;
 import c.sql.sqlite.objects.User;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StoreSQL {
-
-    //TODO Файл базы данных -> файл XML через JAXB -> файл XML через XSTL -> через SAX вывод в консоль
 
     private Connection conn;
 
@@ -36,13 +33,13 @@ public class StoreSQL {
     private void generate(int n) throws SQLException {
         try {
             conn.setAutoCommit(false);
-            Statement statement = conn.createStatement();
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO entry (field) VALUES (?)");
             for (int i = 1; i <= n; i++) {
-                String sql = "INSERT INTO entry (field) VALUES (" + i + ")";
-                statement.executeUpdate(sql);
+                ps.setInt(1, i);
+                ps.addBatch();
             }
-            conn.commit();
-            statement.close();
+            ps.executeBatch();
+            conn.setAutoCommit(true);
         } catch (SQLException e) {
             conn.rollback();
         }
