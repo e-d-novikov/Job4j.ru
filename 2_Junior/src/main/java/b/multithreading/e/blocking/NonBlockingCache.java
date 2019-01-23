@@ -19,8 +19,8 @@ public class NonBlockingCache {
             if (y.getVersion() != y.getVersion()) {
                 throw new OptimisticException();
             }
-            model.setVersion(model.getVersion() + 1);
-            return model;
+            y.setVersion(y.getVersion() + 1);
+            return y;
         });
     }
 
