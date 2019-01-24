@@ -1,4 +1,4 @@
-package d.servlet.json;
+package d.servlet.location;
 
 import org.json.JSONArray;
 import javax.servlet.ServletException;

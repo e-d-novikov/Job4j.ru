@@ -1,4 +1,6 @@
-package d.servlet.json;
+package d.servlet.location;
+
+import d.servlet.location.objects.User;
 
 import java.util.ArrayList;
 import java.util.Map;

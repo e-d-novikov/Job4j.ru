@@ -17,7 +17,9 @@ public class NonBlockingCache {
     public void update(Base model) {
         cache.computeIfPresent(model.getId(), (x, y) -> {
             if (y.getVersion() != y.getVersion()) {
-                throw new OptimisticException();
+                if (model.getVersion() < y.getVersion()) {
+                    throw new OptimisticException();
+                }
             }
             y.setVersion(y.getVersion() + 1);
             return y;
