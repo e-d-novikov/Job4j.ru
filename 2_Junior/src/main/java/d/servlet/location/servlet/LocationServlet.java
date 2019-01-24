@@ -1,5 +1,6 @@
-package d.servlet.location;
+package d.servlet.location.servlet;
 
+import d.servlet.location.storage.Location;
 import org.json.JSONArray;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

@@ -1,5 +1,6 @@
-package d.servlet.http;
+package d.servlet.http.store;
 
+import d.servlet.http.object.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package d.servlet.location;
+package d.servlet.location.storage;
 
 import d.servlet.location.objects.User;
 

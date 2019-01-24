@@ -1,4 +1,4 @@
-package d.servlet.location;
+package d.servlet.location.objects;
 
 public class User {
 

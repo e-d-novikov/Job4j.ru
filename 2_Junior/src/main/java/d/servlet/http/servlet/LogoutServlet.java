@@ -1,4 +1,4 @@
-package d.servlet.http;
+package d.servlet.http.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

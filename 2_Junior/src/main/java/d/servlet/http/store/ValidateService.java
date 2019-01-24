@@ -1,4 +1,6 @@
-package d.servlet.http;
+package d.servlet.http.store;
+
+import d.servlet.http.object.User;
 
 import java.util.ArrayList;
 

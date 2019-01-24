@@ -1,4 +1,4 @@
-package d.servlet.location;
+package d.servlet.location.storage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -2,7 +2,6 @@ package b.oop.a.tracker;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -163,7 +162,10 @@ public class Tracker implements AutoCloseable {
             LOG.error("Connection error!");
         }
     }
-
+    /**
+     * The method check db is empty.
+     * @return - true - is empty or false.
+     */
     public boolean isEmpty() {
         boolean result = true;
         int count = 0;

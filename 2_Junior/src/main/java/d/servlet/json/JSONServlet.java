@@ -1,5 +1,7 @@
 package d.servlet.json;
 
+import d.servlet.location.objects.User;
+import d.servlet.location.storage.UserStore;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
 import javax.servlet.ServletException;

@@ -1,4 +1,4 @@
-package d.servlet.http;
+package d.servlet.http.object;
 
 import java.util.Objects;
 

@@ -1,5 +1,9 @@
 package d.servlet.http;
 
+import d.servlet.http.object.User;
+import d.servlet.http.servlet.UserServlet;
+import d.servlet.http.store.ValidateService;
+import d.servlet.http.store.ValidateStub;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,5 +1,7 @@
-package d.servlet.http;
+package d.servlet.http.servlet;
 
+import d.servlet.http.object.User;
+import d.servlet.http.store.ValidateService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
