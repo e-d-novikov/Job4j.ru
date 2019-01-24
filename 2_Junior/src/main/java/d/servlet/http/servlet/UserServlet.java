@@ -14,7 +14,7 @@ import java.io.IOException;
 public class UserServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         if (req.getParameter("action").equals("edit")) {
             HttpSession session = req.getSession();

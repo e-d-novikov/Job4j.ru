@@ -14,13 +14,13 @@ import java.io.IOException;
 public class AdminServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("users", ValidateService.getInstance().findAll());
         req.getRequestDispatcher("/WEB-INF/views/AdminPage.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getParameter("action").equals("new_user")) {
             req.getRequestDispatcher("/WEB-INF/views/CreateUser.jsp").forward(req, resp);
         } else if (req.getParameter("action").equals("add_user")) {
