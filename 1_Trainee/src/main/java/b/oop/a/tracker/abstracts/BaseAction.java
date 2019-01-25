@@ -1,4 +1,6 @@
-package b.oop.a.tracker;
+package b.oop.a.tracker.abstracts;
+
+import b.oop.a.tracker.interfaces.UserAction;
 /**
  * Class BaseAction.
  * @author Egor Novikov (e.novikov@yahoo.com)

@@ -1,4 +1,7 @@
-package b.oop.a.tracker;
+package b.oop.a.tracker.interfaces;
+
+import b.oop.a.tracker.storage.Tracker;
+
 /**
  * Interface UserAction.
  * @author Egor Novikov (e.novikov@yahoo.com)

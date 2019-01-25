@@ -1,4 +1,4 @@
-package b.oop.a.tracker;
+package b.oop.a.tracker.exceptions;
 /**
  * Class MenuOutException.
  * Error when selecting the wrong menu item.

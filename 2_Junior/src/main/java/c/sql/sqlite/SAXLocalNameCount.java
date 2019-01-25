@@ -23,17 +23,16 @@ public class SAXLocalNameCount extends DefaultHandler {
 
     }
 
-    public void parse() throws Exception {
+    public BigInteger parse(File file) throws Exception {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setNamespaceAware(true);
         SAXParser saxParser = spf.newSAXParser();
         XMLReader xmlReader = saxParser.getXMLReader();
         xmlReader.setContentHandler(new SAXLocalNameCount());
-        xmlReader.parse(convertToFileURL("b.junior/src/main/java/c/sql/sqlite/xml/XSQT.xml"));
+        xmlReader.parse(String.valueOf(file));
         xmlReader.setErrorHandler(new MyErrorHandler(System.err));
         BigInteger n = BigInteger.valueOf((Integer) tags.get("entry"));
-        BigInteger result = ((n.add(new BigInteger("1"))).multiply(n).divide(new BigInteger("2")));
-        System.out.println(result);
+        return ((n.add(new BigInteger("1"))).multiply(n).divide(new BigInteger("2")));
     }
 
     public void startDocument() {

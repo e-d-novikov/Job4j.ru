@@ -1,4 +1,6 @@
-package b.oop.a.tracker;
+package b.oop.a.tracker.inputs;
+
+import b.oop.a.tracker.interfaces.Input;
 
 public class StubInput implements Input {
     /**

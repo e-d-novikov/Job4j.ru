@@ -1,5 +1,7 @@
 package b.oop.a.tracker;
 
+import b.oop.a.tracker.inputs.StubInput;
+import b.oop.a.tracker.inputs.ValidateInput;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

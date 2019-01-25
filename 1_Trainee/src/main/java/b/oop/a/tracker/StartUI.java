@@ -1,5 +1,11 @@
 package b.oop.a.tracker;
 
+import b.oop.a.tracker.inputs.ConsoleInput;
+import b.oop.a.tracker.inputs.ValidateInput;
+import b.oop.a.tracker.interfaces.Input;
+import b.oop.a.tracker.menu.MenuTracker;
+import b.oop.a.tracker.storage.Tracker;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;

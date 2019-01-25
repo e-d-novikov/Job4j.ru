@@ -1,4 +1,11 @@
-package b.oop.a.tracker;
+package b.oop.a.tracker.menu;
+
+import b.oop.a.tracker.StartUI;
+import b.oop.a.tracker.storage.Tracker;
+import b.oop.a.tracker.abstracts.BaseAction;
+import b.oop.a.tracker.interfaces.Input;
+import b.oop.a.tracker.interfaces.UserAction;
+import b.oop.a.tracker.objects.Item;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;

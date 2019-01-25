@@ -1,5 +1,6 @@
-package b.oop.a.tracker;
+package b.oop.a.tracker.storage;
 
+import b.oop.a.tracker.objects.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;

@@ -6,6 +6,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigInteger;
 import java.sql.SQLException;
 /**
  * Класс Converter .
@@ -20,12 +21,14 @@ public class Converter {
     private static StoreXML storeXML;
     private static ConvertXSQT convert;
     private static SAXLocalNameCount sax;
-    private static File first = new File("b.junior/src/main/java/c/sql/sqlite/xml/XML.xml");
-    private static File second = new File("b.junior/src/main/java/c/sql/sqlite/xml/XSQT.xml");
-    private static File scheme = new File("b.junior/src/main/java/c/sql/sqlite/xml/Scheme.xml");
+    /*private static String dir = System.getProperty("user.dir");
+    private static File first = new File(dir + "/2_Junior/src/main/java/c/sql/sqlite/xml/XML.xml");
+    private static File second = new File(dir + "/2_Junior/src/main/java/c/sql/sqlite/xml/XSQT.xml");
+    private static File scheme = new File(dir + "/2_Junior/src/main/java/c/sql/sqlite/xml/Scheme.xml");*/
 
-    public static void main(String[] args) throws Exception, SQLException, ClassNotFoundException, JAXBException, TransformerException, FileNotFoundException {
-        storeSQL = new StoreSQL(new Config("b.junior/src/main/java/c/sql/sqlite/db/fields.db"), 1000000);
+
+    public static BigInteger convert(File first, File second, File scheme)  throws Exception, SQLException, ClassNotFoundException, JAXBException, TransformerException, FileNotFoundException {
+        storeSQL = new StoreSQL(new Config("2_Junior/src/main/java/c/sql/sqlite/db/fields.db"), 100);
         User user = storeSQL.getData();
         storeSQL.closeConnection();
         storeXML = new StoreXML(first);
@@ -33,6 +36,6 @@ public class Converter {
         convert = new ConvertXSQT();
         convert.convert(first, second, scheme);
         sax = new SAXLocalNameCount();
-        sax.parse();
+        return sax.parse(second);
     }
 }

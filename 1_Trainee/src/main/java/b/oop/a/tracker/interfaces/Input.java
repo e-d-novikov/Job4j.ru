@@ -1,4 +1,4 @@
-package b.oop.a.tracker;
+package b.oop.a.tracker.interfaces;
 /**
  * Interface Input describes user actions.
  * @author Egor Novikov (e.novikov@yahoo.com)
