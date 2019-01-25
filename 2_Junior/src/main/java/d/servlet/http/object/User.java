@@ -1,7 +1,11 @@
 package d.servlet.http.object;
-
-import java.util.Objects;
-
+/**
+ * Класс User.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
 public class User {
 
     private final Integer id;

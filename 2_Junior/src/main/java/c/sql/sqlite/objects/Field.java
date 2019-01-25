@@ -1,5 +1,11 @@
 package c.sql.sqlite.objects;
-
+/**
+ * Class Field.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1
+ * @since 0.1
+ */
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement

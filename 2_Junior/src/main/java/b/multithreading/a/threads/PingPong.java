@@ -7,7 +7,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 /**
  * Class PingPong.
- *
  * @author Egor Novikov
  * E-mail: e.novikov@yahoo.com
  * @version 1

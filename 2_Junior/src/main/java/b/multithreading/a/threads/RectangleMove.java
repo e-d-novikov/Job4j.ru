@@ -3,7 +3,6 @@ package b.multithreading.a.threads;
 import javafx.scene.shape.Rectangle;
 /**
  * Class RectangleMove.
- *
  * @author Egor Novikov
  * E-mail: e.novikov@yahoo.com
  * @version 1

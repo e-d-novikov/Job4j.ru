@@ -1,7 +1,13 @@
 package d.servlet.http.store;
 
 import java.util.ArrayList;
-
+/**
+ * Интерфейс Store.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
 public interface Store<User> {
 
     void add(User user);

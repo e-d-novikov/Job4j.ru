@@ -28,7 +28,7 @@
 
     <!--<servlet>
         <servlet-name>JSONServlet</servlet-name>
-        <servlet-class>d.servlet.json.JSONServlet</servlet-class>
+        <servlet-class>d.servlet.location.servlet.JSONServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>JSONServlet</servlet-name>

@@ -11,15 +11,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+/**
+ * LoginServlet.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-
+	/**
+	 * Метод doGet направляет на страницу Login.jsp.
+	 * @param request - запрос;
+	 * @param response - ответ;
+	 * @throws ServletException
+	 * @throws IOException
+	 */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/views/Login.jsp").forward(request, response);
     }
 
+	/**
+	 * Метод doPost выполняет проверку введенных логина и пароля.
+	 * @param request - запрос;
+	 * @param response - ответ;
+	 * @throws ServletException
+	 * @throws IOException
+	 */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String login = request.getParameter("login");

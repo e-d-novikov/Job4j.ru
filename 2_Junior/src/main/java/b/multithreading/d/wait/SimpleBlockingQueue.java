@@ -4,7 +4,13 @@ import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 import java.util.LinkedList;
 import java.util.Queue;
-
+/**
+ * Class SimpleBlockingQueue.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
 @ThreadSafe
 public class SimpleBlockingQueue<T> {
 

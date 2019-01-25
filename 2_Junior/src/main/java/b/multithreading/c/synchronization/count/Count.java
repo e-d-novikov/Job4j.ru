@@ -4,7 +4,6 @@ import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 /**
  * Class Count.
- *
  * @author Egor Novikov
  * E-mail: e.novikov@yahoo.com
  * @version 1

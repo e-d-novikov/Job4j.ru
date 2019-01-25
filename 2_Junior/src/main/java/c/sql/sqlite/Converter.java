@@ -7,7 +7,13 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-
+/**
+ * Класс Converter .
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1
+ * @since 0.1
+ */
 public class Converter {
 
     private static StoreSQL storeSQL;

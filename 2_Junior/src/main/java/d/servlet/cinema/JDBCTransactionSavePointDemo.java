@@ -8,7 +8,13 @@ import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.logging.Logger;
-
+/**
+ * Класс JDBCTransactionSavePointDemo - пример транзакции с приминением JDBC.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
 public class JDBCTransactionSavePointDemo {
 
     // JDBC Driver Name & Database URL

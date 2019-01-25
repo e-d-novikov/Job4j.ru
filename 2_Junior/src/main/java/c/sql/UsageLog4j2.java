@@ -2,8 +2,15 @@ package c.sql;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-
+/**
+ * Класс UsageLog4j2 демонстрирует работу с логгером.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1
+ * @since 0.1
+ */
 public class UsageLog4j2 {
+
     private static final Logger LOG = LogManager.getLogger(UsageLog4j2.class.getName());
 
     public static void main(String[] args) {

@@ -1,7 +1,13 @@
 package parser;
 
 import java.sql.Timestamp;
-
+/**
+ * Класс Vacancy.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
 public class Vacancy {
 
     private String name;

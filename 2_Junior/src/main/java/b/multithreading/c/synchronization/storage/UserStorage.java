@@ -2,11 +2,9 @@ package b.multithreading.c.synchronization.storage;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
-
 import java.util.ArrayList;
 /**
  * Class UserStorage.
- *
  * @author Egor Novikov
  * E-mail: e.novikov@yahoo.com
  * @version 1

@@ -1,7 +1,13 @@
 package b.multithreading.d.wait;
 
 import net.jcip.annotations.ThreadSafe;
-
+/**
+ * Class ParallelSearch.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
 @ThreadSafe
 public class ParallelSearch {
 

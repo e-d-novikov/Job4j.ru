@@ -6,7 +6,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ * Класс AccountStorage обеспечивает доступ к базе данных cinema таблице accounts.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
 public class AccountStorage {
 
     private static final BasicDataSource SOURCE = new BasicDataSource();

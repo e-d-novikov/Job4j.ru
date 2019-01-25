@@ -8,11 +8,19 @@ import java.util.Properties;
 import static org.quartz.CronScheduleBuilder.cronSchedule;
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
-
+/**
+ * Класс ParserVacancy.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
 public class ParserVacancy implements Job {
 
     private String quartz;
-
+    /**
+     * Конструктор.
+     */
     private ParserVacancy() {
         try {
             getQuartz();
@@ -20,11 +28,20 @@ public class ParserVacancy implements Job {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Запуск приложения.
+     * @param args
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
         Parser.checkNewRecords();
     }
-
+    /**
+     * Метод получает настройки повторного запуска приложения из файла конфигурации.
+     * @throws IOException
+     */
     private void getQuartz() throws IOException {
         Properties props = new Properties();
         try (InputStream stream = getClass().getClassLoader().getResourceAsStream("config.properties")) {
@@ -32,7 +49,11 @@ public class ParserVacancy implements Job {
         }
         quartz = props.getProperty("time");
     }
-
+    /**
+     * Метод отвечает за повторный запуск приложения.
+     * @param jobExecutionContext - jobExecutionContext.
+     * @throws JobExecutionException
+     */
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();

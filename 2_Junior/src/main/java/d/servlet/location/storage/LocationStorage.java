@@ -5,25 +5,35 @@ import org.slf4j.LoggerFactory;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+/**
+ * Класс LocationStorage отвечает за взаимодействие с базой данных location.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
+public class LocationStorage {
 
-public class Location {
-
-    private static final Logger LOG = LoggerFactory.getLogger(Location.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LocationStorage.class);
     private static LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> location = new LinkedHashMap<>();
     private String url = "jdbc:postgresql://localhost:5432/location";
     private String username = "postgres";
     private String password = "password";
     private Connection connection = null;
-    private static Location instance = new Location();
-
-    private Location() {
+    private static LocationStorage instance = new LocationStorage();
+    /**
+     * Конструктор, при создании автоматически выгружает базу данных в location.
+     */
+    private LocationStorage() {
         createList();
     }
 
-    public static Location getInstance() {
+    public static LocationStorage getInstance() {
         return instance;
     }
-
+    /**
+     * Метод выгружает базу данных location.
+     */
     private void createList() {
         String sql = "SELECT country.name AS country, region.name AS region, city.name AS city FROM country "
         + "LEFT JOIN region ON country.id = region.country_id "
@@ -55,7 +65,12 @@ public class Location {
             }
         }
     }
-
+    /**
+     * Метод добавляет населенный пункт в location.
+     * @param country - страна;
+     * @param region - регион;
+     * @param city - населенный пункт.
+     */
     private void addCity(String country, String region, String city) {
         if (location.containsKey(country)) {
             if (location.get(country).containsKey(region)) {
@@ -73,15 +88,27 @@ public class Location {
             location.put(country, regions);
         }
     }
-
+    /**
+     * Метод возвращает список стран.
+     * @return - список стран.
+     */
     public ArrayList<String> getCountries() {
         return new ArrayList<>(location.keySet());
     }
-
+    /**
+     * Метод возвращает список регионов определенной страны.
+     * @param country - страна;
+     * @return - список регионов;
+     */
     public ArrayList<String> getRegions(String country) {
         return new ArrayList<>(location.get(country).keySet());
     }
-
+    /**
+     * Метод возвращает список городов региона.
+     * @param country - страна;
+     * @param region - рагион;
+     * @return - список населенных пунктов.
+     */
     public ArrayList<String> getCities(String country, String region) {
         return location.get(country).get(region);
     }

@@ -10,9 +10,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-
+/**
+ * Класс Parser.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
 public class Parser {
-
+    /**
+     * Метод проверяет наличие новых вакансий на www.sql.ru, и добаляет в хранилище при их наличии.
+     * @throws IOException
+     */
     public static void checkNewRecords() throws IOException {
         Document document  = Jsoup.connect("https://www.sql.ru/forum/job-offers").get();
         Integer countPages = Integer.valueOf(document.select("table.sort_options > tbody > tr > td").get(2).getElementsByTag("a").get(9).text());

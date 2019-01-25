@@ -6,7 +6,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
-
+/**
+ * Class ConvertXSQT.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1
+ * @since 0.1
+ */
 public class ConvertXSQT {
 
     public void convert(File source, File dest, File scheme) throws TransformerException, FileNotFoundException {

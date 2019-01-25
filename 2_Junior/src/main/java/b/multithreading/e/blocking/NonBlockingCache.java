@@ -1,7 +1,13 @@
 package b.multithreading.e.blocking;
 
 import java.util.concurrent.ConcurrentHashMap;
-
+/**
+ * Class NonBlockingCache.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
 public class NonBlockingCache {
 
     private ConcurrentHashMap<Integer, Base> cache;

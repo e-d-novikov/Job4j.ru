@@ -5,7 +5,13 @@ import d.servlet.cinema.objects.Ticket;
 import org.apache.commons.dbcp2.BasicDataSource;
 import java.sql.*;
 import java.util.ArrayList;
-
+/**
+ * Класс CinemaStorage обеспечивает доступ к базе данных cinema таблице hall.
+ * @author Egor Novikov
+ * E-mail: e.novikov@yahoo.com
+ * @version 1$
+ * @since 0.1
+ */
 public class CinemaStorage {
 
     private static final BasicDataSource SOURCE = new BasicDataSource();
@@ -23,15 +29,6 @@ public class CinemaStorage {
 
     public static CinemaStorage getInstance() {
         return INSTANCE;
-    }
-
-    public Connection getConnection() throws SQLException {
-        return SOURCE.getConnection();
-    }
-
-    public void closeConnection(Connection connection) throws SQLException {
-        connection.setAutoCommit(true);
-        connection.close();
     }
 
     public static void buyTicket(int id, String name, String phone) {
