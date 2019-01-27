@@ -21,11 +21,6 @@ public class Converter {
     private static StoreXML storeXML;
     private static ConvertXSQT convert;
     private static SAXLocalNameCount sax;
-    /*private static String dir = System.getProperty("user.dir");
-    private static File first = new File(dir + "/2_Junior/src/main/java/c/sql/sqlite/xml/XML.xml");
-    private static File second = new File(dir + "/2_Junior/src/main/java/c/sql/sqlite/xml/XSQT.xml");
-    private static File scheme = new File(dir + "/2_Junior/src/main/java/c/sql/sqlite/xml/Scheme.xml");*/
-
 
     public static BigInteger convert(File first, File second, File scheme)  throws Exception, SQLException, ClassNotFoundException, JAXBException, TransformerException, FileNotFoundException {
         storeSQL = new StoreSQL(new Config("2_Junior/src/main/java/c/sql/sqlite/db/fields.db"), 100);
