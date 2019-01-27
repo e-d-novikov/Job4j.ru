@@ -18,7 +18,7 @@ import java.util.Properties;
  * @version 1$
  * @since 0.1
  */
-public class DbStore {
+public class DbStore implements Store {
 
     private static final Logger LOG = LoggerFactory.getLogger(DbStore.class);
     private static final BasicDataSource SOURCE = new BasicDataSource();
@@ -49,7 +49,8 @@ public class DbStore {
      * Метод добаляет нового пользователя в базу данных.
      * @param user - пользователь.
      */
-    public void createUser(User user) {
+    @Override
+    public void add(User user) {
         PreparedStatement ps = null;
         String sql = "INSERT INTO users(login, password, role, user_name, user_sername, email) VALUES(?, ?, ?, ?, ?, ?);";
         try (Connection connection = SOURCE.getConnection()) {
@@ -69,7 +70,8 @@ public class DbStore {
      * Метод вносит изменения данных пользователя в базе данных.
      * @param user - пользователь.
      */
-    public void editUser(User user) {
+    @Override
+    public void update(User user) {
         String sql = "UPDATE users SET login = ?, password = ?, role = ?, user_name = ?, user_sername = ?, email = ? where id = ?;";
         PreparedStatement ps = null;
         try (Connection connection = SOURCE.getConnection()) {
@@ -90,7 +92,8 @@ public class DbStore {
      * Метод удяляет пользователя из базы данных.
      * @param login - логин.
      */
-    public void deleteUser(String login) {
+    @Override
+    public void delete(String login) {
         PreparedStatement ps = null;
         String sql = "DELETE FROM users WHERE login = ?";
         try (Connection connection = SOURCE.getConnection()) {
@@ -102,35 +105,12 @@ public class DbStore {
         }
     }
     /**
-     * Метод возвращает всех пользователей.
-     * @return - все пользователи.
-     */
-    public ArrayList<User> findAllUsers() {
-        ArrayList<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM users";
-        try (Connection connection = SOURCE.getConnection()) {
-            Statement statment = connection.createStatement();
-            ResultSet result = statment.executeQuery(sql);
-            while (result.next()) {
-                users.add(new User(result.getInt("id"),
-                        result.getString("login"),
-                        result.getString("password"),
-                        result.getString("role"),
-                        result.getString("user_name"),
-                        result.getString("user_sername"),
-                        result.getString("email")));
-            }
-        } catch (SQLException e) {
-            LOG.error("Connection error!");
-        }
-        return users;
-    }
-    /**
      * Метод осуществляет поиск пользователя в базе данных по логину.
      * @param login - логин.
      * @return - пользователь.
      */
-    public User findById(String login) {
+    @Override
+    public User findByLogin(String login) {
         User user = null;
         PreparedStatement ps = null;
         ResultSet result = null;
@@ -152,6 +132,31 @@ public class DbStore {
             LOG.error("Connection error!");
         }
         return user;
+    }
+    /**
+     * Метод возвращает всех пользователей.
+     * @return - все пользователи.
+     */
+    @Override
+    public ArrayList findAll() {
+        ArrayList<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+        try (Connection connection = SOURCE.getConnection()) {
+            Statement statment = connection.createStatement();
+            ResultSet result = statment.executeQuery(sql);
+            while (result.next()) {
+                users.add(new User(result.getInt("id"),
+                        result.getString("login"),
+                        result.getString("password"),
+                        result.getString("role"),
+                        result.getString("user_name"),
+                        result.getString("user_sername"),
+                        result.getString("email")));
+            }
+        } catch (SQLException e) {
+            LOG.error("Connection error!");
+        }
+        return users;
     }
     /**
      * Метод проверяет существование в базе данных пользователя с ID.

@@ -1,5 +1,7 @@
 package d.servlet.http.store;
 
+import d.servlet.http.object.User;
+
 import java.util.ArrayList;
 /**
  * Интерфейс Store.
@@ -8,17 +10,17 @@ import java.util.ArrayList;
  * @version 1$
  * @since 0.1
  */
-public interface Store<User> {
+public interface Store {
 
     void add(User user);
 
     void update(User user);
 
-    void delete(int id);
+    void delete(String login);
 
     ArrayList<User> findAll();
 
-    User findById(int id);
+    User findByLogin(String login);
 
     boolean availableId(int id);
 

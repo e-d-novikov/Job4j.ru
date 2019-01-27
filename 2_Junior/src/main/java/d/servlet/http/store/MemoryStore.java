@@ -10,17 +10,17 @@ import java.util.concurrent.ConcurrentHashMap;
  * @version 1$
  * @since 0.1
  */
-public enum MemoryStore implements Store<User> {
+public enum MemoryStore implements Store {
 
     INSTANCE;
-    private final ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
     /**
      * Метод добавляет пользователя в хранилище.
      * @param user - пользователь.
      */
     @Override
     public void add(User user) {
-        users.put(user.getId(), user);
+        users.put(user.getLogin(), user);
     }
     /**
      * Метод обновляет данные пользователя в хранилище.
@@ -28,15 +28,15 @@ public enum MemoryStore implements Store<User> {
      */
     @Override
     public void update(User user) {
-        users.put(user.getId(), user);
+        users.put(user.getLogin(), user);
     }
     /**
      * Метод удаляет данные пользователя из хранилища.
-     * @param id - ID пользователя.
+     * @param login - ID пользователя.
      */
     @Override
-    public void delete(int id) {
-        users.remove(id);
+    public void delete(String login) {
+        users.remove(login);
     }
     /**
      * Метод возвращает всех текущих пользователей.
@@ -45,19 +45,19 @@ public enum MemoryStore implements Store<User> {
     @Override
     public ArrayList<User> findAll() {
         ArrayList<User> result = new ArrayList<>();
-        for (Integer id : users.keySet()) {
-            result.add(users.get(id));
+        for (String login : users.keySet()) {
+            result.add(users.get(login));
         }
         return result;
     }
     /**
-     * Метод осуществляет пользователя по ID.
-     * @param id - ID пользователя.
+     * Метод осуществляет поиск пользователя по логину.
+     * @param login - логин.
      * @return - пользователь.
      */
     @Override
-    public User findById(int id) {
-        return users.get(id);
+    public User findByLogin(String login) {
+        return users.get(login);
     }
     /**
      * Метод проверяет существование пользователя с ID в хранилище.

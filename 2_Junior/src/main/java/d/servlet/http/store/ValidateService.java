@@ -26,21 +26,21 @@ public class ValidateService {
      * @param user - новый пользователь.
      */
     public void add(User user) {
-        memory.createUser(user);
+        memory.add(user);
     }
     /**
      * Метод проверяет существование пользователя перед редактированием.
      * @param user
      */
     public void update(User user) {
-        memory.editUser(user);
+        memory.update(user);
     }
     /**
      * Метод проверяет существование пользователя перед удалением.
      * @param login - логин.
      */
     public void delete(String login) {
-        memory.deleteUser(login);
+        memory.delete(login);
     }
     /**
      * Проверяет существование зарегистрированных пользователей.
@@ -49,7 +49,7 @@ public class ValidateService {
     public ArrayList<User> findAll() {
         ArrayList<User> result = null;
         if (memory.getSize() > 0) {
-            result = memory.findAllUsers();
+            result = memory.findAll();
         }
         return result;
     }
@@ -59,7 +59,7 @@ public class ValidateService {
      * @return - пользователь.
      */
     public User findById(String login) {
-        return memory.findById(login);
+        return memory.findByLogin(login);
     }
     /**
      * Проверяет существование пользователей с парой логин-пароль.
