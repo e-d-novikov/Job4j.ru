@@ -4,8 +4,13 @@ import d.servlet.http.object.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
+
 /**
  * Класс DbStore обеспечивает взаимодействие с базой данных users.
  * @author Egor Novikov
@@ -22,10 +27,16 @@ public class DbStore {
      * Конструктор.
      */
     public DbStore() {
-        SOURCE.setDriverClassName("org.postgresql.Driver");
-        SOURCE.setUrl("jdbc:postgresql://localhost:5432/users");
-        SOURCE.setUsername("postgres");
-        SOURCE.setPassword("password");
+        Properties props = new Properties();
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("config.properties")) {
+            props.load(stream);
+        } catch (IOException e) {
+            LOG.error("");
+        }
+        SOURCE.setDriverClassName(props.getProperty("driver"));
+        SOURCE.setUrl(props.getProperty("url"));
+        SOURCE.setUsername(props.getProperty("login"));
+        SOURCE.setPassword(props.getProperty("password"));
         SOURCE.setMinIdle(5);
         SOURCE.setMaxIdle(10);
         SOURCE.setMaxOpenPreparedStatements(100);
