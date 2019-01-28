@@ -23,8 +23,6 @@ public class CinemaServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
         JSONArray array = new JSONArray(CinemaStorage.getInstance().getAllPlaces());
         resp.getWriter().write(array.toString());
     }

@@ -1,4 +1,7 @@
 package d.servlet.cinema.objects;
+
+import java.util.Objects;
+
 /**
  * Класс аккаунт.
  * @author Egor Novikov
@@ -38,5 +41,20 @@ public class Account {
 
     public String getPhone() {
         return phone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Objects.equals(id, account.id) &&
+                Objects.equals(name, account.name) &&
+                Objects.equals(phone, account.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, phone);
     }
 }

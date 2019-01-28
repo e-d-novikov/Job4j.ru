@@ -44,6 +44,15 @@
         <url-pattern>/location</url-pattern>
     </servlet-mapping>-->
 
+    <filter>
+        <filter-name>JSONFilter</filter-name>
+        <filter-class>d.servlet.cinema.servlets.JSONFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>JSONFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>CinemaServlet</servlet-name>
         <servlet-class>d.servlet.cinema.servlets.CinemaServlet</servlet-class>

@@ -3,8 +3,13 @@ package d.servlet.cinema.storage;
 import d.servlet.cinema.objects.Account;
 import d.servlet.cinema.objects.Ticket;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
 /**
  * Класс CinemaStorage обеспечивает доступ к базе данных cinema таблице hall.
  * @author Egor Novikov
@@ -14,14 +19,21 @@ import java.util.ArrayList;
  */
 public class CinemaStorage {
 
+    private static final Logger LOG = LoggerFactory.getLogger(CinemaStorage.class);
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final CinemaStorage INSTANCE = new CinemaStorage();
 
     public CinemaStorage() {
-        SOURCE.setDriverClassName("org.postgresql.Driver");
-        SOURCE.setUrl("jdbc:postgresql://localhost:5432/cinema");
-        SOURCE.setUsername("postgres");
-        SOURCE.setPassword("password");
+        Properties props = new Properties();
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("cinema.properties")) {
+            props.load(stream);
+        } catch (IOException e) {
+            LOG.error("");
+        }
+        SOURCE.setDriverClassName(props.getProperty("driver"));
+        SOURCE.setUrl(props.getProperty("url"));
+        SOURCE.setUsername(props.getProperty("login"));
+        SOURCE.setPassword(props.getProperty("password"));
         SOURCE.setMinIdle(5);
         SOURCE.setMaxIdle(10);
         SOURCE.setMaxOpenPreparedStatements(100);
@@ -32,50 +44,50 @@ public class CinemaStorage {
     }
 
     public static void buyTicket(int id, String name, String phone) {
-        Statement firstStatement = null;
-        PreparedStatement secondStatement = null;
         String begin = "BEGIN;";
         String select = "SELECT id_account FROM hall WHERE id = ? FOR UPDATE;";
         try (Connection connection = SOURCE.getConnection()) {
             connection.setAutoCommit(false);
-            firstStatement = connection.createStatement();
+            Statement firstStatement = connection.createStatement();
             firstStatement.execute(begin);
-            secondStatement = connection.prepareStatement(select);
+            firstStatement.close();
+            PreparedStatement secondStatement = connection.prepareStatement(select);
             secondStatement.setInt(1, id);
             secondStatement.executeQuery();
+            secondStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
 
         int accountID = AccountStorage.getInstance().createAccount(new Account(name, phone));
 
         String update = "UPDATE hall SET id_account = ? WHERE id = ?;";
-        PreparedStatement thirdStatement = null;
         try (Connection connection = SOURCE.getConnection()) {
-            thirdStatement = connection.prepareStatement(update);
+            PreparedStatement thirdStatement = connection.prepareStatement(update);
             thirdStatement.setInt(1, accountID);
             thirdStatement.setInt(2, id);
             thirdStatement.executeUpdate();
+            thirdStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
 
         String commit = "COMMIT;";
-        Statement fourthStatement = null;
+
         try (Connection connection = SOURCE.getConnection()) {
-            fourthStatement = connection.createStatement();
+            Statement fourthStatement = connection.createStatement();
             fourthStatement.execute(commit);
+            fourthStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
     }
 
     public Ticket getPlaceFromID(int id) {
         Ticket ticket = null;
         String sql = "SELECT * FROM hall WHERE id = ?;";
-        PreparedStatement ps = null;
         try (Connection connection = SOURCE.getConnection()) {
-            ps = connection.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet result = ps.executeQuery();
             while (result.next()) {
@@ -84,8 +96,10 @@ public class CinemaStorage {
                         result.getInt("place"),
                         result.getInt("price"));
             }
+            result.close();
+            ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
         return ticket;
     }
@@ -104,8 +118,10 @@ public class CinemaStorage {
                         result.getInt("price"),
                         AccountStorage.getInstance().getAccountFromID(accountID)));
             }
+            result.close();
+            statment.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Connection error!");
         }
         return tickets;
     }
