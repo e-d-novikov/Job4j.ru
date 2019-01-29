@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  * Класс Parser.
  * @author Egor Novikov
@@ -56,8 +58,12 @@ public class Parser {
                     String name = element.text();
                     String link = element.attr("href");
                     String text;
-                    if (name.contains("Java") || name.contains("java") || name.contains("JAVA")) {
-                        if (name.contains("script") || name.contains("Script") || name.contains("SCRIPT") || name.contains("nodejs")) {
+                    Pattern java = Pattern.compile("(?:^|\\s|\\w)+(java|Java|JAVA)+(?:$|\\s|-|\\w)+($|\\w)", Pattern.UNICODE_CHARACTER_CLASS);
+                    Pattern script = Pattern.compile("(?:^|\\s|\\w)+(\\w|-)+(script|Script|SCRIPT)+(?:$|\\s|\\w)+($|\\w)", Pattern.UNICODE_CHARACTER_CLASS);
+                    Matcher javaMatcher = java.matcher(name);
+                    Matcher scriptMatcher = script.matcher(name);
+                    if (javaMatcher.matches()) {
+                        if (scriptMatcher.matches()) {
                             continue;
                         } else {
                             Document vac = Jsoup.connect(link).get();
