@@ -28,7 +28,7 @@ public class CinemaStorage {
         try (InputStream stream = getClass().getClassLoader().getResourceAsStream("cinema.properties")) {
             props.load(stream);
         } catch (IOException e) {
-            LOG.error("");
+            LOG.error("Error", e);
         }
         SOURCE.setDriverClassName(props.getProperty("driver"));
         SOURCE.setUrl(props.getProperty("url"));
@@ -56,7 +56,7 @@ public class CinemaStorage {
             secondStatement.executeQuery();
             secondStatement.close();
         } catch (SQLException e) {
-            LOG.error("Connection error!");
+            LOG.error("Connection error!", e);
         }
 
         int accountID = AccountStorage.getInstance().createAccount(new Account(name, phone));
@@ -69,7 +69,7 @@ public class CinemaStorage {
             thirdStatement.executeUpdate();
             thirdStatement.close();
         } catch (SQLException e) {
-            LOG.error("Connection error!");
+            LOG.error("Connection error!", e);
         }
 
         String commit = "COMMIT;";
@@ -79,7 +79,7 @@ public class CinemaStorage {
             fourthStatement.execute(commit);
             fourthStatement.close();
         } catch (SQLException e) {
-            LOG.error("Connection error!");
+            LOG.error("Connection error!", e);
         }
     }
 
@@ -99,7 +99,7 @@ public class CinemaStorage {
             result.close();
             ps.close();
         } catch (SQLException e) {
-            LOG.error("Connection error!");
+            LOG.error("Connection error!", e);
         }
         return ticket;
     }
@@ -121,7 +121,7 @@ public class CinemaStorage {
             result.close();
             statment.close();
         } catch (SQLException e) {
-            LOG.error("Connection error!");
+            LOG.error("Connection error!", e);
         }
         return tickets;
     }

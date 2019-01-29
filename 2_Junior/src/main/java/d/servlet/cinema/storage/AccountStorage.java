@@ -29,7 +29,7 @@ public class AccountStorage {
         try (InputStream stream = getClass().getClassLoader().getResourceAsStream("cinema.properties")) {
             props.load(stream);
         } catch (IOException e) {
-            LOG.error("");
+            LOG.error("Error!", e);
         }
         SOURCE.setDriverClassName(props.getProperty("driver"));
         SOURCE.setUrl(props.getProperty("url"));
@@ -64,7 +64,7 @@ public class AccountStorage {
             rs.close();
             psSecond.close();
         } catch (SQLException e) {
-            LOG.error("Connection error!");
+            LOG.error("Connection error!", e);
         }
         return result;
     }
@@ -84,7 +84,7 @@ public class AccountStorage {
             result.close();
             ps.close();
         } catch (SQLException e) {
-            LOG.error("Connection error!");
+            LOG.error("Connection error!", e);
         }
         return account;
     }
