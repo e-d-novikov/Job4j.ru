@@ -20,8 +20,8 @@ import java.util.Properties;
  */
 public class AccountStorage {
 
-    private final Logger LOG = LoggerFactory.getLogger(CinemaStorage.class);
-    private final BasicDataSource SOURCE = new BasicDataSource();
+    private static final Logger LOG = LoggerFactory.getLogger(CinemaStorage.class);
+    private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final AccountStorage INSTANCE = new AccountStorage();
 
     public AccountStorage() {

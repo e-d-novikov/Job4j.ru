@@ -59,14 +59,18 @@ public class Ticket {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Ticket ticket = (Ticket) o;
-        return id == ticket.id &&
-                row == ticket.row &&
-                place == ticket.place &&
-                price == ticket.price &&
-                Objects.equals(account, ticket.account);
+        return id == ticket.id
+                && row == ticket.row
+                && place == ticket.place
+                && price == ticket.price
+                && Objects.equals(account, ticket.account);
     }
 
     @Override
