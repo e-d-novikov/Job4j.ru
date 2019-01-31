@@ -6,12 +6,10 @@ import b.oop.a.tracker.abstracts.BaseAction;
 import b.oop.a.tracker.interfaces.Input;
 import b.oop.a.tracker.interfaces.UserAction;
 import b.oop.a.tracker.objects.Item;
-
 import java.util.ArrayList;
 import java.util.function.Consumer;
 /**
  * Class MenuTracker the class describes menu items.
- *
  * @author Egor Novikov (e.novikov@yahoo.com)
  * @version 1
  * @since 14/06/2018
@@ -177,7 +175,7 @@ public class MenuTracker {
          * @param tracker - tracker.
          */
         public void execute(Input input, Tracker tracker) {
-            if (tracker.isEmpty()) {
+            if (!tracker.isEmpty()) {
                 System.out.println("Current applications:");
                 for (Item item : tracker.getAll()) {
                     System.out.println(item.toString());

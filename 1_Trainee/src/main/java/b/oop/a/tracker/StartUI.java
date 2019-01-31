@@ -28,20 +28,23 @@ public class StartUI {
      */
     private final Tracker tracker;
     /**
+     *
+     */
+    private final MenuTracker menu;
+    /**
      * Constructor.
      * @param input -input.
      * @param tracker- tracker.
      */
-    public StartUI(Input input, Tracker tracker) {
+    public StartUI(final Input input, final Tracker tracker, final MenuTracker menu) {
         this.input = input;
         this.tracker = tracker;
+        this.menu = menu;
     }
     /**
      * The method is responsible for displaying menu items.
      */
     public void init() {
-        MenuTracker menu = new MenuTracker(this.input, this.tracker);
-        menu.fillAction(this);
         do {
             menu.show();
             menu.select(input.ask("Menu item:", menu.getNumbersAction()));
@@ -56,6 +59,11 @@ public class StartUI {
      * @param args
      */
     public static void main(String[] args) throws SQLException, IOException, URISyntaxException {
-        new StartUI(new ValidateInput(new ConsoleInput()), new Tracker()).init();
+        ValidateInput validateInput = new ValidateInput(new ConsoleInput());
+        Tracker tracker= new Tracker();
+        MenuTracker menu = new MenuTracker(validateInput, tracker);
+        StartUI ui = new StartUI(validateInput, tracker, menu);
+        menu.fillAction(ui);
+        ui.init();
     }
 }
