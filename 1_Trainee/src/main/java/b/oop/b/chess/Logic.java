@@ -3,7 +3,8 @@ package b.oop.b.chess;
 import  b.oop.b.chess.exceptions.*;
 import b.oop.b.chess.figure.*;
 /**
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
  * @version $Id$
  * @since 22/06/2018
  */

@@ -3,7 +3,8 @@ package a.collections.pro.f.tree;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * @author Egor Novikov (e.novikov@inbox.ru)
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
  * @version $Id$
  * @since 0.1
  */

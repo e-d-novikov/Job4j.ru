@@ -12,7 +12,7 @@ import static org.hamcrest.core.Is.is;
  * Class ConverterTest tests methods from class Converter.
  *
  * @author Egor Novikov
- * E-mail: e.novikov@yahoo.com
+ * E-mail: enovikovdev@gmail.com
  * @version 1
  * @since 0.1
  */

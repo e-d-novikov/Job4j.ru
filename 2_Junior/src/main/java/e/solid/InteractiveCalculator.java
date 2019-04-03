@@ -12,7 +12,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
+/**
+ * Класс InteractiveCalculator.
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
+ * @version 1$
+ * @since 0.1
+ */
 public class InteractiveCalculator extends Application {
 
     private Stage rootStage = new Stage();

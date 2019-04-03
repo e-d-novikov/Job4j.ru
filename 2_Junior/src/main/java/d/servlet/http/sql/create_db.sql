@@ -8,4 +8,4 @@ user_sername character varying (200),
 email character varying (200));
 
 INSERT INTO users(login, password, role, user_name, user_sername, email)
-VALUES('admin', 'admin', 'admin', 'Egor', 'Novikov', 'e.novikov@yahoo.com');
+VALUES('admin', 'admin', 'admin', 'Egor', 'Novikov', 'enovikovdev@gmail.com');

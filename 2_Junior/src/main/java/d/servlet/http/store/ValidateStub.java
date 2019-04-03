@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * ValidateStub хранилиже пользователей на базе Map.
  * @author Egor Novikov
- * E-mail: e.novikov@yahoo.com
+ * E-mail: enovikovdev@gmail.com
  * @version 1$
  * @since 0.1
  */

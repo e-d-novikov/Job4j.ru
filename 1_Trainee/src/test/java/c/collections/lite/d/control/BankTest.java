@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 /**
  * Class BankTest tests methods from class Bank.
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov (enovikovdev@gmail.com)
  * @version 1
  * @since 1
  */

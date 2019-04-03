@@ -2,7 +2,13 @@ package b.oop.a.tracker.objects;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+/**
+ * Class Item.
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
+ * @version 1
+ * @since 14/06/2018
+ */
 public class Item {
 
     private final Integer id;

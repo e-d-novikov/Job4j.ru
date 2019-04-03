@@ -4,7 +4,7 @@ import b.oop.b.chess.figure.Cell;
 import b.oop.b.chess.figure.Figure;
 
 /**
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov (enovikovdev@gmail.com)
  * @version $Id$
  * @since 22/06/2018
  * Белая фигура - Король

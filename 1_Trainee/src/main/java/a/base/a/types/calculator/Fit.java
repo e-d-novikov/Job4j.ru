@@ -3,7 +3,7 @@ package a.base.a.types.calculator;
  * Class Fit calculates the ideal weight for a man and a woman.
  *
  * @author Egor Novikov
- * E-mail: e.novikov@yahoo.com
+ * E-mail: enovikovdev@gmail.com
  * @version 1$
  * @since 0.1
  */

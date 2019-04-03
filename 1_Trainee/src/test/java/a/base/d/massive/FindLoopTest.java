@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
  * Class FindLoopTest tests methods from class FindLoop.
  *
  * @author Egor Novikov
- * E-mail: e.novikov@yahoo.com
+ * E-mail: enovikovdev@gmail.com
  * @version 1$
  * @since 0.1
  */

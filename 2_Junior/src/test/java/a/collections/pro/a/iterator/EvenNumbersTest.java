@@ -10,7 +10,7 @@ import static org.hamcrest.core.Is.is;
  * Class EvenNumbersTest tests methods from class EvenNumbers.
  *
  * @author Egor Novikov
- * E-mail: e.novikov@yahoo.com
+ * E-mail: enovikovdev@gmail.com
  * @version 1
  * @since 0.1
  */

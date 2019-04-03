@@ -8,7 +8,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 /**
  * Class PhoneDictionaryTest tests methods from class PhoneDictionary.
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov (enovikovdev@gmail.com)
  * @version 1
  * @since 1
  */

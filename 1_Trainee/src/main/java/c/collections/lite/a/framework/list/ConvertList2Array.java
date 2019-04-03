@@ -7,7 +7,8 @@ import java.util.stream.Collectors;
 
 /**
  * Convert list to array.
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
  * @version 1
  * @since 1
  */

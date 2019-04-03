@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * Converting a two-dimensional array to a list.
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
  * @version 1
  * @since 1
  */

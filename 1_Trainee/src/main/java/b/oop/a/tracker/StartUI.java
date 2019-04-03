@@ -10,7 +10,8 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 /**
  * Application launch class.
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
  * @version 1
  * @since 14/06/2018
  */
@@ -60,7 +61,7 @@ public class StartUI {
      */
     public static void main(String[] args) throws SQLException, IOException, URISyntaxException {
         ValidateInput validateInput = new ValidateInput(new ConsoleInput());
-        Tracker tracker= new Tracker();
+        Tracker tracker = new Tracker();
         MenuTracker menu = new MenuTracker(validateInput, tracker);
         StartUI ui = new StartUI(validateInput, tracker, menu);
         menu.fillAction(ui);

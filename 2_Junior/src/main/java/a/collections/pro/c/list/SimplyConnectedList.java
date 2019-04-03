@@ -3,7 +3,7 @@ package a.collections.pro.c.list;
  * Class SimpleArrayList.
  * A class implements a simply-connected list, each element has a link to the next.
  * @author Egor Novikov
- * E-mail: e.novikov@yahoo.com
+ * E-mail: enovikovdev@gmail.com
  * @version 1
  * @since 0.1
  */

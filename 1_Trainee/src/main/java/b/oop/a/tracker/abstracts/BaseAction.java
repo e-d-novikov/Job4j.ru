@@ -3,7 +3,8 @@ package b.oop.a.tracker.abstracts;
 import b.oop.a.tracker.interfaces.UserAction;
 /**
  * Class BaseAction.
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
  * @version 1.0
  * @since 14/06/2018
  */

@@ -3,7 +3,7 @@ package a.base.a.types.converter;
  * The class implements the currency converter.
  *
  * @author Egor Novikov
- * E-mail: e.novikov@yahoo.com
+ * E-mail: enovikovdev@gmail.com
  * @version 1$
  * @since 0.1
  */

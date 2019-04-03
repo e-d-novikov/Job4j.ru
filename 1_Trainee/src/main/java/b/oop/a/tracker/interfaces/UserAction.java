@@ -4,7 +4,8 @@ import b.oop.a.tracker.storage.Tracker;
 
 /**
  * Interface UserAction.
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
  * @version 1
  * @since 14/06/2018
  */

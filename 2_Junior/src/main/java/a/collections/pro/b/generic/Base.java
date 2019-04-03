@@ -1,6 +1,7 @@
 package a.collections.pro.b.generic;
 /**
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
  */
 public abstract class Base {
 

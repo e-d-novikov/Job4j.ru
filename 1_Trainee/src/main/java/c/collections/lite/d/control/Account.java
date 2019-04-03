@@ -1,7 +1,8 @@
 package c.collections.lite.d.control;
 /**
  * Account.
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
  * @version 1
  * @since 1
  */

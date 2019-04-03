@@ -4,7 +4,8 @@ import b.oop.a.tracker.exceptions.MenuOutException;
 import b.oop.a.tracker.interfaces.Input;
 /**
  * Class ValidateInput checks the correctness of the entered data.
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
  * @version 1
  * @since 14/06/2018
  */

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 /**
  * Class Tracker keeps applications, and has methods for editing.
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov (enovikovdev@gmail.com)
  * @version 1.0
  * @since 14/06/2018
  */

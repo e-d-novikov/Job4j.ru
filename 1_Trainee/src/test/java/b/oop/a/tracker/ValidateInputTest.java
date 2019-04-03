@@ -11,7 +11,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 /**
  * Class ValidateInputTest check for errors when entering incorrectly.
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov (enovikovdev@gmail.com)
  * @version 1
  * @since 18/06/2018
  */

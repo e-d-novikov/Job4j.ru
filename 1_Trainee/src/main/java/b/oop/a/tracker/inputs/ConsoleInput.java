@@ -6,7 +6,8 @@ import b.oop.a.tracker.interfaces.Input;
 import java.util.Scanner;
 /**
  * Class ConsoleInput
- * @author Egor Novikov (e.novikov@yahoo.com)
+ * @author Egor Novikov
+ * E-mail: enovikovdev@gmail.com
  * @version 1
  * @since 14/06/2018
  */
