@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>6_Parser_vacancy</artifactId>
+    <artifactId>4_Parser</artifactId>
 
     <build>
         <plugins>

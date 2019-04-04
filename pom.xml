@@ -16,10 +16,8 @@
     <modules>
         <module>1_Trainee</module>
         <module>2_Junior</module>
-        <module>3_Middle</module>
-        <module>4_Fullstack</module>
-        <module>5_Addition</module>
-        <module>6_Parser_vacancy</module>
+        <module>3_Addition</module>
+        <module>4_Parser_vacancy</module>
     </modules>
 
     <profiles>

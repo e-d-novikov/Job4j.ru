@@ -33,7 +33,7 @@ public class SimpleBlockingQueue<T> {
 
     public T poll() throws InterruptedException {
         synchronized (this.queue) {
-            if (queue.size() == 1) {
+            if (queue.isEmpty()) {
                 queue.notify();
             }
             return queue.poll();
